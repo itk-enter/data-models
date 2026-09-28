@@ -26,6 +26,14 @@ tasks:
       - cmd: git diff --exit-code
         ignore_error: false
 
+  test:
+    desc: 'Run PHPUnit'
+    cmds:
+      - task: composer:install
+      - task: php
+        vars:
+          TASK_ARGS: vendor/bin/phpunit
+
   site:build:
     desc: 'Build the docs site into build/site/'
     cmds:
@@ -72,6 +80,7 @@ tasks:
     cmds:
       - task: coding-standards:composer:apply
       - task: coding-standards:markdown:apply
+      - task: coding-standards:php:apply
       - task: coding-standards:yaml:apply
 
   coding-standards:check:
@@ -79,6 +88,7 @@ tasks:
     cmds:
       - task: coding-standards:composer:check
       - task: coding-standards:markdown:check
+      - task: coding-standards:php:check
       - task: coding-standards:yaml:check
 
   coding-standards:composer:apply:
@@ -111,6 +121,22 @@ tasks:
         vars:
           TASK_ARGS: run --rm markdownlint '**/*.md'
 
+  coding-standards:php:apply:
+    desc: 'Apply coding standards for PHP'
+    cmds:
+      - task: composer:install
+      - task: php
+        vars:
+          TASK_ARGS: vendor/bin/php-cs-fixer fix
+
+  coding-standards:php:check:
+    desc: 'Apply and check coding standards for PHP'
+    cmds:
+      - task: coding-standards:php:apply
+      - task: php
+        vars:
+          TASK_ARGS: vendor/bin/php-cs-fixer check
+
   coding-standards:yaml:apply:
     desc: 'Apply coding standards for YAML'
     cmds:
@@ -125,6 +151,19 @@ tasks:
       - task: compose
         vars:
           TASK_ARGS: run --rm prettier --parser yaml '**/*.{yml,yaml}' --check
+
+  code-analysis:
+    desc: 'Run code analysis'
+    cmds:
+      - task: code-analysis:phpstan
+
+  code-analysis:phpstan:
+    desc: 'Run PHPStan'
+    cmds:
+      - task: composer:install
+      - task: php
+        vars:
+          TASK_ARGS: vendor/bin/phpstan
 
   compose:
     internal: true

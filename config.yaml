@@ -17,12 +17,19 @@ urls:
     # Latest-by-default: what people and term/model IRIs resolve to (phase 6).
     pages: https://itk-enter.github.io/data-models
     repo: https://github.com/itk-enter/data-models
+    # What x-license-url's GitHub blob links point at.
+    default_branch: main
 
 # Third-party files vendored under vendor-assets/, pinned so validation and
-# the docs site build offline and reproducibly. `task vendor:update` (not
-# implemented yet) refreshes vendor-assets/ at these pins and checksums them.
+# the docs site build offline and reproducibly. `task vendor:update`
+# refreshes vendor-assets/ at these pins.
 vendor:
     common_schema:
+        # Where schema.json's own $refs point; vendor-assets/common-schema.json
+        # is registered under this URI so opis/json-schema resolves them
+        # offline instead of fetching it.
+        ref_url: https://smart-data-models.github.io/data-models/common-schema.json
+        # Where `vendor:update` fetches the pinned copy from.
         source: https://raw.githubusercontent.com/smart-data-models/data-models/{ref}/common-schema.json
         ref: 80c8cfb07c56478058eb1b5d8e9d9908c844e300
     swagger_ui:
