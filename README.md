@@ -21,7 +21,9 @@ Two public faces, from one repo:
 
 <!-- model-index:start -->
 
-No models have been imported yet (see `data-models-PLAN.md`, phase 2).
+| Subject | Model | Version | Status | Links |
+| --- | --- | --- | --- | --- |
+| dataModel.PointOfInterest | PublicToilet | 0.0.1 | own model | [Spec](https://itk-enter.github.io/data-models/dataModel.PointOfInterest/PublicToilet/) |
 
 <!-- model-index:end -->
 

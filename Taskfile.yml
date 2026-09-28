@@ -81,6 +81,7 @@ tasks:
       - task: coding-standards:composer:apply
       - task: coding-standards:markdown:apply
       - task: coding-standards:php:apply
+      - task: coding-standards:twig:apply
       - task: coding-standards:yaml:apply
 
   coding-standards:check:
@@ -89,6 +90,7 @@ tasks:
       - task: coding-standards:composer:check
       - task: coding-standards:markdown:check
       - task: coding-standards:php:check
+      - task: coding-standards:twig:check
       - task: coding-standards:yaml:check
 
   coding-standards:composer:apply:
@@ -136,6 +138,22 @@ tasks:
       - task: php
         vars:
           TASK_ARGS: vendor/bin/php-cs-fixer check
+
+  coding-standards:twig:apply:
+    desc: 'Apply coding standards for Twig'
+    cmds:
+      - task: composer:install
+      - task: php
+        vars:
+          TASK_ARGS: vendor/bin/twig-cs-fixer fix
+
+  coding-standards:twig:check:
+    desc: 'Apply and check coding standards for Twig'
+    cmds:
+      - task: coding-standards:twig:apply
+      - task: php
+        vars:
+          TASK_ARGS: vendor/bin/twig-cs-fixer check
 
   coding-standards:yaml:apply:
     desc: 'Apply coding standards for YAML'

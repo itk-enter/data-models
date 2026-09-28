@@ -1,0 +1,69 @@
+{
+  "id": "Museum-Barcelona-MACBA-1234",
+  "type": "Museum",
+  "address": {
+    "addressCountry": "ES",
+    "addressLocality": "Barcelona",
+    "streetAddress": "Plaza Dels \u00c0ngels, 1"
+  },
+  "alternateName": "MACBA",
+  "artPeriod": [
+    "contemporary"
+  ],
+  "description": "The MACBA was designed by the American architect Richard Meier and inaugurated in 1995.",
+  "facilities": [
+    "shop",
+    "cloakRoom",
+    "guidedTour"
+  ],
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      2.166877152,
+      41.383022358
+    ]
+  },
+  "museumType": [
+    "fineArts"
+  ],
+  "name": "Museo de Arte Contemporaneo de Barcelona",
+  "openingHoursSpecification": [
+    {
+      "dayOfWeek": "Monday",
+      "closes": "19:30:00",
+      "opens": "11:00:00"
+    },
+    {
+      "dayOfWeek": "Tuesday",
+      "closes": "19:30:00",
+      "opens": "11:00:00"
+    },
+    {
+      "dayOfWeek": "Wednesday",
+      "closes": "19:30:00",
+      "opens": "11:00:00"
+    },
+    {
+      "dayOfWeek": "Thursday",
+      "closes": "19:30:00",
+      "opens": "11:00:00"
+    },
+    {
+      "dayOfWeek": "Friday",
+      "closes": "19:30:00",
+      "opens": "11:00:00"
+    },
+    {
+      "dayOfWeek": "Saturday",
+      "closes": "21:00:00",
+      "opens": "10:00:00"
+    },
+    {
+      "dayOfWeek": "Sunday",
+      "closes": "15:00:00",
+      "opens": "10:00:00"
+    }
+  ],
+  "source": "http://www.tourspain.es",
+  "touristArea": "Barcelona-Capital"
+}
