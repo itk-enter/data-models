@@ -3,12 +3,17 @@
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
+use ItkEnter\DataModels\Command\ValidateCommand;
+use ItkEnter\DataModels\Command\VendorUpdateCommand;
 use Symfony\Component\Console\Application;
 
-$application = new Application('itk-enter/data-models');
+$repoRoot = dirname(__DIR__);
 
-// Commands are registered here as they land, one per phase of
-// data-models-PLAN.md: validate, generate, site:build, release, model:new,
-// vendor:update.
+$application = new Application('itk-enter/data-models');
+$application->addCommand(new ValidateCommand($repoRoot));
+$application->addCommand(new VendorUpdateCommand($repoRoot));
+
+// More commands are registered here as they land, one per phase of
+// data-models-PLAN.md: generate, site:build, release, model:new.
 
 $application->run();

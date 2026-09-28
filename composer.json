@@ -5,13 +5,25 @@
     "type": "project",
     "require": {
         "php": ">=8.4",
-        "symfony/console": "~8.1.6"
+        "opis/json-schema": "^2.6",
+        "symfony/console": "~8.1.6",
+        "symfony/yaml": "~8.1.6"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.95.27",
+        "phpstan/phpstan": "^2.2.16",
+        "phpunit/phpunit": "^13.3.5"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "ItkEnter\\DataModels\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ItkEnter\\DataModels\\Tests\\": "tests/"
         }
     },
     "config": {

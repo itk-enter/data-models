@@ -1,0 +1,10 @@
+{
+    "type": "object",
+    "properties": {
+        "toiletType": {
+            "type": "string",
+            "enum": ["fixed", "automatic", "portable"]
+        }
+    },
+    "required": ["toiletType"]
+}
