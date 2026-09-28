@@ -94,7 +94,7 @@ tasks:
       - task: coding-standards:composer:apply
       - task: composer
         vars:
-          TASK_ARGS: audit
+          TASK_ARGS: audit --locked
 
   coding-standards:markdown:apply:
     desc: 'Apply coding standards for Markdown'
