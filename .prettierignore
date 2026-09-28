@@ -8,3 +8,13 @@ dataModel.*/*/swagger.yaml
 # Vendored, read-only copies of SDM's own published files (test fixtures) —
 # not ours to reformat.
 tests/fixtures/sdm/
+
+# Verbatim copies of ITK Dev's canonical GitHub Actions templates ("Do not
+# edit this file!" headers) — kept byte-for-byte so they diff cleanly
+# against https://github.com/itk-dev/devops_itkdev-docker, not reformatted
+# to our own 4-space convention.
+.github/workflows/composer.yaml
+.github/workflows/markdown.yaml
+.github/workflows/php.yaml
+.github/workflows/twig.yaml
+.github/workflows/yaml.yaml

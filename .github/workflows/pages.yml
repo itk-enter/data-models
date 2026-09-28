@@ -1,0 +1,51 @@
+name: Deploy docs site
+
+on:
+    push:
+        branches:
+            - main
+        tags:
+            - "*/v*"
+
+concurrency:
+    group: pages
+    cancel-in-progress: false
+
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+jobs:
+    build:
+        name: Build the docs site
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  # site:prepare lists each model's <Model>/v* tags.
+                  fetch-depth: 0
+
+            - uses: go-task/setup-task@v2
+
+            - name: Create docker network
+              run: docker network create frontend
+
+            - name: Build the docs site
+              run: task site:build
+
+            - uses: actions/upload-pages-artifact@v3
+              with:
+                  path: build/site
+
+    deploy:
+        name: Deploy to GitHub Pages
+        needs: build
+        runs-on: ubuntu-latest
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4

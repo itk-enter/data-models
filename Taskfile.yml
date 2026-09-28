@@ -42,7 +42,10 @@ tasks:
           TASK_ARGS: site:prepare
       - task: mkdocs
         vars:
-          TASK_ARGS: build -f site/mkdocs.yml
+          TASK_ARGS: build --strict -f site/mkdocs.yml
+      - task: datamodels
+        vars:
+          TASK_ARGS: site:check
 
   site:serve:
     desc: 'Serve a local preview of the docs site'

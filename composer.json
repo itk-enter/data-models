@@ -8,6 +8,7 @@
         "opis/json-schema": "^2.6",
         "symfony/console": "~8.1.6",
         "symfony/filesystem": "~8.1.0",
+        "symfony/process": "~8.1.6",
         "symfony/yaml": "~8.1.6",
         "twig/twig": "^3.30"
     },

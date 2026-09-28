@@ -1,0 +1,37 @@
+name: CI
+
+env:
+    COMPOSE_USER: runner
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+
+jobs:
+    check:
+        name: Analyse, test, validate, generate and build the docs site
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  # site:build lists each model's <Model>/v* tags.
+                  fetch-depth: 0
+
+            - uses: go-task/setup-task@v2
+
+            - name: Create docker network
+              run: docker network create frontend
+
+            - name: Code analysis
+              run: task code-analysis
+
+            - name: Run tests
+              run: task test
+
+            - name: Validate, regenerate and fail if the tree changed
+              run: task check
+
+            - name: Build the docs site (without deploying)
+              run: task site:build
