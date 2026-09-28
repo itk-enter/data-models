@@ -1,5 +1,8 @@
 name: Deploy docs site
 
+env:
+    COMPOSE_USER: runner
+
 on:
     push:
         branches:
