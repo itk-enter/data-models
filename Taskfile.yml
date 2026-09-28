@@ -188,7 +188,7 @@ tasks:
 
   compose:
     internal: true
-    cmd: 'docker compose {{.TASK_ARGS}} {{.CLI_ARGS}}'
+    cmd: 'docker compose {{.TASK_ARGS}}'
 
   composer:
     internal: true
