@@ -15,10 +15,14 @@ use Symfony\Component\Process\Process;
 
 /**
  * Phase 5, point 2: reads the version from the schema, checks the tree is
- * clean and generated files are current, then creates and pushes
- * `<Model>/v<version>`.
+ * clean and generated files are current, then creates `<Model>/v<version>`
+ * — locally only. This normally runs inside the phpfpm container (via
+ * `task release`), which has no access to the host's git credentials, so
+ * pushing the tag is the Taskfile's job, run on the host straight after —
+ * see the `release` task. On success this prints nothing but the bare tag
+ * name, so the Taskfile can capture it.
  */
-#[AsCommand(name: 'release', description: 'Tag a model release: <Model>/v<version>')]
+#[AsCommand(name: 'release', description: 'Tag a model release locally: <Model>/v<version>')]
 final class ReleaseCommand extends Command
 {
     public function __construct(private readonly string $repoRoot)
@@ -79,9 +83,7 @@ final class ReleaseCommand extends Command
         }
 
         $this->git(['tag', $tag]);
-        $this->git(['push', 'origin', $tag]);
-
-        $output->writeln("<info>Tagged and pushed {$tag}</info>");
+        $output->writeln($tag);
 
         return Command::SUCCESS;
     }

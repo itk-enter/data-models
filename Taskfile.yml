@@ -58,11 +58,28 @@ tasks:
           TASK_ARGS: 'serve -f site/mkdocs.yml --dev-addr 0.0.0.0:8000'
 
   release:
-    desc: 'Tag a model release, e.g. `task {{.TASK}} -- PublicToilet`'
-    cmd:
-      task: datamodels
-      vars:
-        TASK_ARGS: 'release {{.CLI_ARGS}}'
+    desc: 'Tag and push a model release, e.g. `task {{.TASK}} -- PublicToilet`'
+    cmds:
+      # bin/datamodels release only tags locally: it runs in the phpfpm
+      # container, which has no access to the host's git credentials.
+      - task: datamodels
+        vars:
+          TASK_ARGS: 'release {{.CLI_ARGS}}'
+      - task: push-release-tag
+        vars:
+          MODEL: '{{.CLI_ARGS}}'
+
+  push-release-tag:
+    internal: true
+    # The container and host share the same working tree (the phpfpm
+    # service bind-mounts it), so the tag `datamodels release` just
+    # created is already visible here — no need to capture its output.
+    vars:
+      TAG:
+        sh: git tag --list '{{.MODEL}}/v*' --points-at HEAD
+    cmds:
+      - echo 'Pushing {{.TAG}}'
+      - git push origin {{.TAG}}
 
   vendor:update:
     desc: 'Refresh vendor-assets/ (common-schema, swagger-ui) at the pinned versions and verify checksums'
