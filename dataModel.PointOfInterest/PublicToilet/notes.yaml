@@ -1,0 +1,12 @@
+notesHeader: >-
+    Describes a public toilet facility for city services, accessibility apps and tourism. Harmonised from three sources, each property's schema description names its origin, "Source: ...".
+    (1) LGA Public Toilets schema (UK), https://github.com/esd-org-uk/schemas/tree/master/PublicToilets
+    (2) National Public Toilet Map data dictionary (Australia), https://data.gov.au/data/dataset/553b3049-2b8b-46a2-95e6-640d7986a8c1
+    (3) OpenStreetMap amenity=toilets tagging, https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dtoilets
+notesMiddle: >-
+    This entity type extends https://schema.org/PublicToilet, so any property whose domain is https://schema.org/PublicToilet (or its parents CivicStructure and Place) can be used by applications.
+    Boolean properties are tri-state, omitted means unknown and false means known to be absent. Publishers should omit rather than default to false.
+    Reused common definitions, GSMA-Commons, Location-Commons, Contact-Commons (contactPoint used for fault reporting, LGA ReportEmail/ReportTel), DateTime-Commons openingHoursSpecification, isAccessibleForFree (inverse of NPTM PaymentRequired).
+notesFooter: >-
+    Source fields deliberately not mapped, LGA ExtractDate (use dateModified), OrganisationURI/OrganisationLabel (use dataProvider/owner), ServiceTypeURI/ServiceTypeLabel (implied by the entity type), CoordinateReferenceSystem/GeoX/GeoY/GeoPointLicensingURL (use location in WGS84), UPRN (jurisdiction-specific identifier), GeoAreaURI/GeoAreaLabel (use areaServed), InfoURL (use seeAlso), Notes (use description/accessNote). NPTM FacilityID/URL (use id/seeAlso), Address1/Town/State/AddressNote (use address), ACMLAK (folded into keyScheme), and the separate NPTM note fields (ParkingNote, AdultChangeNote, BabyChangeNote, DumpPointNote, OpeningHoursNote, ToiletNote) which are not individually modelled.
+    Open points, (a) the OSM key for soap has not been verified, (b) licensing of the LGA schema (no licence file found) and the NPTM download terms should be checked before submission, (c) keyScheme values beyond RADAR, MLAK and Eurokey are unverified, (d) a companion PublicToiletObserved entity for occupancy, cleaning status and faults is not included.

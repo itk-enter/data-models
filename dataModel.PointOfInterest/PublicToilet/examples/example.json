@@ -1,0 +1,111 @@
+{
+  "id": "urn:ngsi-ld:PublicToilet:example-city:PT-0042",
+  "type": "PublicToilet",
+  "name": "Castle Park public toilets",
+  "description": "Synthetic example. Standalone public toilet block at the east entrance of the park.",
+  "source": "https://example.org/opendata/public-toilets",
+  "dataProvider": "Example City Council",
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      -2.5879,
+      51.4556
+    ]
+  },
+  "address": {
+    "streetAddress": "Castle Park, Lower Castle Street",
+    "addressLocality": "Example City",
+    "postalCode": "EX1 2AB",
+    "addressCountry": "GB"
+  },
+  "contactPoint": {
+    "contactType": "fault reporting",
+    "email": "toilets@example.org",
+    "telephone": "+44 1234 567890"
+  },
+  "toiletType": "fixed",
+  "disposal": "flush",
+  "genderCategory": [
+    "female",
+    "male"
+  ],
+  "toiletPosition": [
+    "seated",
+    "urinal"
+  ],
+  "level": 0,
+  "accessType": "public",
+  "openingHours": [
+    "Mo-Su 07:00-21:00"
+  ],
+  "openingHoursSpecification": [
+    {
+      "dayOfWeek": "Monday",
+      "opens": "07:00:00",
+      "closes": "21:00:00"
+    },
+    {
+      "dayOfWeek": "Tuesday",
+      "opens": "07:00:00",
+      "closes": "21:00:00"
+    },
+    {
+      "dayOfWeek": "Wednesday",
+      "opens": "07:00:00",
+      "closes": "21:00:00"
+    },
+    {
+      "dayOfWeek": "Thursday",
+      "opens": "07:00:00",
+      "closes": "21:00:00"
+    },
+    {
+      "dayOfWeek": "Friday",
+      "opens": "07:00:00",
+      "closes": "21:00:00"
+    },
+    {
+      "dayOfWeek": "Saturday",
+      "opens": "07:00:00",
+      "closes": "21:00:00"
+    },
+    {
+      "dayOfWeek": "Sunday",
+      "opens": "07:00:00",
+      "closes": "21:00:00"
+    }
+  ],
+  "isAccessibleForFree": false,
+  "chargeAmount": 0.5,
+  "chargeCurrency": "GBP",
+  "paymentMethod": [
+    "coins",
+    "contactless"
+  ],
+  "keyRequired": true,
+  "keyScheme": "RADAR",
+  "keyAccessOutsideOpeningHours": false,
+  "staffed": false,
+  "refOperator": "urn:ngsi-ld:Organization:example-city-council",
+  "wheelchairAccessible": "yes",
+  "ambulantCubicle": true,
+  "transferSide": [
+    "left"
+  ],
+  "parking": false,
+  "accessNote": "Accessible cubicle uses a RADAR key; keys are sold at the park café.",
+  "changingPlace": false,
+  "adultChange": false,
+  "babyChange": true,
+  "familyToilet": false,
+  "handwashing": true,
+  "soap": true,
+  "handDrying": [
+    "electricHandDryer"
+  ],
+  "drinkingWater": true,
+  "shower": false,
+  "menstrualProducts": false,
+  "sharpsDisposal": true,
+  "sanitaryDisposal": true
+}
