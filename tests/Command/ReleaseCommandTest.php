@@ -13,12 +13,13 @@ use Symfony\Component\Process\Process;
 /**
  * Exercises release against a throwaway git repo, seeded from the real
  * (already-valid, per phase 3's tests) PublicToilet model — never the
- * project's own repo, since this tags and pushes for real.
+ * project's own repo. release only tags locally (the Taskfile's `release`
+ * task pushes separately, on the host — see Taskfile.yml), so nothing
+ * here touches a remote.
  */
 final class ReleaseCommandTest extends TestCase
 {
     private string $projectRoot;
-    private string $origin;
     private string $repo;
     private Filesystem $filesystem;
 
@@ -26,9 +27,6 @@ final class ReleaseCommandTest extends TestCase
     {
         $this->projectRoot = dirname(__DIR__, 2);
         $this->filesystem = new Filesystem();
-
-        $this->origin = sys_get_temp_dir().'/release-test-origin-'.uniqid();
-        $this->git(['init', '--bare', '--initial-branch=main', $this->origin], $this->projectRoot);
 
         $this->repo = sys_get_temp_dir().'/release-test-repo-'.uniqid();
         mkdir($this->repo, recursive: true);
@@ -39,61 +37,58 @@ final class ReleaseCommandTest extends TestCase
         // it), rather than an artificial "always dirty" fixture.
         (new RepositoryGenerator($this->repo))->generate();
 
-        $this->git(['init', '--initial-branch=main'], $this->repo);
-        $this->git(['config', 'user.email', 'test@example.test'], $this->repo);
-        $this->git(['config', 'user.name', 'Test'], $this->repo);
-        $this->git(['remote', 'add', 'origin', $this->origin], $this->repo);
-        $this->git(['add', '-A'], $this->repo);
-        $this->git(['commit', '-m', 'initial'], $this->repo);
-        $this->git(['push', 'origin', 'main'], $this->repo);
+        $this->git(['init', '--initial-branch=main']);
+        $this->git(['config', 'user.email', 'test@example.test']);
+        $this->git(['config', 'user.name', 'Test']);
+        $this->git(['add', '-A']);
+        $this->git(['commit', '-m', 'initial']);
     }
 
     protected function tearDown(): void
     {
-        $this->filesystem->remove([$this->repo, $this->origin]);
+        $this->filesystem->remove($this->repo);
     }
 
-    public function testTagsAndPushesTheReleaseWhenTheTreeIsCleanAndValid(): void
+    public function testTagsTheReleaseLocallyWhenTheTreeIsCleanAndValid(): void
     {
-        $status = $this->runRelease('PublicToilet');
+        $tester = $this->runRelease('PublicToilet');
 
-        self::assertSame(0, $status);
+        self::assertSame(0, $tester->getStatusCode());
+        // The Taskfile's release task greps this exact output for the
+        // tag to push — it must be the only thing printed on success.
+        self::assertSame('PublicToilet/v0.0.1', trim($tester->getDisplay()));
         self::assertSame(
             'PublicToilet/v0.0.1',
             trim((new Process(['git', 'tag', '--list', 'PublicToilet/v0.0.1'], $this->repo))->mustRun()->getOutput()),
-        );
-        self::assertSame(
-            'PublicToilet/v0.0.1',
-            trim((new Process(['git', 'tag', '--list', 'PublicToilet/v0.0.1'], $this->origin))->mustRun()->getOutput()),
-            'the tag should have been pushed to origin',
         );
     }
 
     public function testFailsWhenTheTagAlreadyExists(): void
     {
-        self::assertSame(0, $this->runRelease('PublicToilet'));
-        self::assertNotSame(0, $this->runRelease('PublicToilet'));
+        self::assertSame(0, $this->runRelease('PublicToilet')->getStatusCode());
+        self::assertNotSame(0, $this->runRelease('PublicToilet')->getStatusCode());
     }
 
     public function testFailsOnAnUncleanTree(): void
     {
         file_put_contents("{$this->repo}/notes.local.md", 'an uncommitted scratch file');
 
-        self::assertNotSame(0, $this->runRelease('PublicToilet'));
+        self::assertNotSame(0, $this->runRelease('PublicToilet')->getStatusCode());
     }
 
     public function testFailsOnAnUnknownModel(): void
     {
-        self::assertNotSame(0, $this->runRelease('NoSuchModel'));
+        self::assertNotSame(0, $this->runRelease('NoSuchModel')->getStatusCode());
     }
 
-    private function runRelease(string $model): int
+    private function runRelease(string $model): CommandTester
     {
         $application = new Application();
         $application->addCommand(new ReleaseCommand($this->repo));
         $tester = new CommandTester($application->find('release'));
+        $tester->execute(['model' => $model]);
 
-        return $tester->execute(['model' => $model]);
+        return $tester;
     }
 
     private function seedRepo(): void
@@ -119,8 +114,8 @@ final class ReleaseCommandTest extends TestCase
     /**
      * @param string[] $args
      */
-    private function git(array $args, string $cwd): void
+    private function git(array $args): void
     {
-        (new Process(['git', ...$args], $cwd))->mustRun();
+        (new Process(['git', ...$args], $this->repo))->mustRun();
     }
 }
