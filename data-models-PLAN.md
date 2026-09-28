@@ -7,7 +7,7 @@ otherwise generate on acceptance (examples in all formats, `model.yaml`,
 `swagger.yaml`, `schema.sql`, `doc/spec.md`, the subject `context.jsonld`),
 plus a documentation site on GitHub Pages.
 
-The first model is `PublicToilet`, today in `enter/PublicToilet_SDM/`.
+The first model is `PublicToilet`, today in `PublicToilet_SDM/`.
 
 Goals:
 
@@ -137,6 +137,15 @@ data-models/
 The folder is `vendor-assets/` rather than `vendor/`, so it doesn't clash
 with Composer's `vendor/`.
 
+This is the end state, not what phase 1 creates. `src/`, `tests/` and
+`vendor-assets/common-schema.json` appear in phase 3 (the validator needs
+them); `templates/` and `vendor-assets/swagger-ui/` in phase 4 and 6
+respectively. Phase 1 doesn't pre-create empty directories for any of them.
+Likewise, `composer.json`'s dependencies and dev tooling
+(`phpstan.dist.neon`, `.php-cs-fixer.dist.php`, `phpunit.dist.xml`, …) are
+added by whichever phase first needs them, not all up front — there's
+nothing to analyse, style-check or test until `src/` has real code in it.
+
 Every generated file carries a "generated — do not edit" header where the
 format allows a comment (YAML, Markdown, SQL). JSON can't hold one, so
 `CLAUDE.md` and the README list the generated JSON files.
@@ -158,15 +167,14 @@ Done when: the empty repo exists and the agent can push a branch to it.
 
 Mirror `enter`'s setup; copy from it where possible.
 
-1. `composer.json` (`"php": ">=8.4"`) with the dependencies:
-   - `symfony/console`, `symfony/yaml`, `symfony/process` (git calls),
-     `symfony/filesystem`, all `~8.1`
-   - `twig/twig`
-   - `opis/json-schema` (draft 2020-12)
-
-   Dev dependencies: `phpunit/phpunit`, `phpstan/phpstan`,
-   `friendsofphp/php-cs-fixer`. PSR-4 autoload `ItkEnter\DataModels\` →
-   `src/`.
+1. `composer.json` (`"php": ">=8.4"`) with just `symfony/console` for now —
+   what `bin/datamodels` actually uses today. No dev dependencies yet: there's
+   no PHP under `src/` for PHPUnit, PHPStan or PHP CS Fixer to run against.
+   PSR-4 autoload `ItkEnter\DataModels\` → `src/`, ready for phase 3.
+   Everything else in the plan's dependency list (`symfony/yaml`,
+   `symfony/process`, `symfony/filesystem`, `twig/twig`, `opis/json-schema`,
+   and the dev tooling) is added by the phase that first needs it — see the
+   note under "Target layout" and each phase below.
 2. `docker-compose.yml` services:
    - `phpfpm`: `itkdev/php8.4-fpm`, repo mounted
    - `mkdocs`: `squidfunk/mkdocs-material:<pinned tag>`
@@ -174,12 +182,13 @@ Mirror `enter`'s setup; copy from it where possible.
 3. `bin/datamodels`: a `symfony/console` application. Commands are added
    per phase: `validate`, `generate`, `site:build`, `release`, `model:new`,
    `vendor:update`.
-4. `Taskfile.yml`: `enter`'s `compose`, `composer`, `php`, `coding-standards:*`
-   and `code-analysis` tasks, plus these, each running through `phpfpm`:
+4. `Taskfile.yml`: `enter`'s `compose`, `composer`, `php` and
+   `coding-standards:composer` / `:markdown` / `:yaml` tasks (no `:php` or
+   `:twig` yet — nothing to check), plus these, each running through
+   `phpfpm`:
    - `validate`: all checks from phase 3, for all or a given model
    - `generate`: all generators from phase 4, for all or a given model
    - `check`: `validate` + `generate` + fail if the git tree changed (CI)
-   - `test`: PHPUnit
    - `site:build` and `site:serve`: phase 6
    - `release -- <Model>`: phase 5
    - `vendor:update`: refresh `vendor-assets/` (common-schema, swagger-ui) at
@@ -189,12 +198,13 @@ Mirror `enter`'s setup; copy from it where possible.
    the SDM common-schema source URL, the pinned swagger-ui version.
 6. Root `README.md`, `CLAUDE.md`, `LICENSE`, `.gitignore` (`vendor/`, `build/`).
 
-Done when: `task coding-standards:check`, `task code-analysis` and
-`task test` pass on an empty test suite, and `bin/datamodels list` runs.
+Done when: `task coding-standards:check` passes and `bin/datamodels list`
+runs. (`task code-analysis` and `task test` don't exist yet — phase 3 adds
+them, alongside the first PHP source they check.)
 
 ### Phase 2: import PublicToilet
 
-1. Copy `enter/PublicToilet_SDM/` into `dataModel.PointOfInterest/PublicToilet/`.
+1. Copy `PublicToilet_SDM/` into `dataModel.PointOfInterest/PublicToilet/`.
 2. Move `example.json` into `examples/`. **Drop the hand-written
    `example-normalized.json`**: phase 4 generates it. Keep a copy in
    `tests/fixtures/` to compare against the generator output.
@@ -222,6 +232,15 @@ no SDM URLs.
 
 Implement in `src/Validation/`, exposed as `bin/datamodels validate` /
 `task validate`. Each check reports the model, the file and the problem.
+
+This is the first phase to add PHP source, so it's also the one that adds
+`opis/json-schema` and `symfony/yaml` to `composer.json`, and
+`phpunit/phpunit`, `phpstan/phpstan` and `friendsofphp/php-cs-fixer` as dev
+dependencies, restoring the `test`, `code-analysis` and
+`coding-standards:php:*` Taskfile tasks phase 1 didn't need yet. It's also
+the phase that implements `vendor:update` and runs it for the first time, to
+populate `vendor-assets/common-schema.json` — the validator needs it before
+its own spike test can run.
 
 **Do this first:** a spike test proving `opis/json-schema` can validate
 `example.json` against the PublicToilet schema, with SDM's common-schema
@@ -251,6 +270,10 @@ Done when: `task validate` passes on PublicToilet, and each check has a
 failing fixture test.
 
 ### Phase 4: generators
+
+Adds `twig/twig` and `symfony/filesystem` to `composer.json`, and
+`vincentlanglet/twig-cs-fixer` as a dev dependency once `templates/` has its
+first `.twig` file, restoring `coding-standards:twig:*`.
 
 Implement in `src/Generator/`, one class per file type, exposed as
 `bin/datamodels generate` / `task generate`. They share one loader,
@@ -329,6 +352,9 @@ Done when: a PR that edits `schema.json` without regenerating fails CI, and
 `PublicToilet/v0.0.1` is tagged.
 
 ### Phase 6: documentation site on GitHub Pages
+
+Adds `symfony/process` to `composer.json` for the `git tag`/`git archive`
+calls below.
 
 Two steps: `bin/datamodels site:prepare` (PHP, `src/Site/`) writes a MkDocs
 source tree to `build/docs/`, then the `mkdocs` service runs

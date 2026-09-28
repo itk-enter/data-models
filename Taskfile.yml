@@ -26,14 +26,6 @@ tasks:
       - cmd: git diff --exit-code
         ignore_error: false
 
-  test:
-    desc: 'Run PHPUnit'
-    cmds:
-      - task: composer:install
-      - task: php
-        vars:
-          TASK_ARGS: vendor/bin/phpunit
-
   site:build:
     desc: 'Build the docs site into build/site/'
     cmds:
@@ -78,21 +70,15 @@ tasks:
   coding-standards:apply:
     desc: 'Apply coding standards'
     cmds:
-      - task: composer:install
       - task: coding-standards:composer:apply
       - task: coding-standards:markdown:apply
-      - task: coding-standards:php:apply
-      - task: coding-standards:twig:apply
       - task: coding-standards:yaml:apply
 
   coding-standards:check:
     desc: 'Apply and check coding standards'
     cmds:
-      - task: composer:install
       - task: coding-standards:composer:check
       - task: coding-standards:markdown:check
-      - task: coding-standards:php:check
-      - task: coding-standards:twig:check
       - task: coding-standards:yaml:check
 
   coding-standards:composer:apply:
@@ -100,7 +86,7 @@ tasks:
     cmd:
       task: composer
       vars:
-        TASK_ARGS: normalize
+        TASK_ARGS: validate --strict
 
   coding-standards:composer:check:
     desc: 'Apply and check coding standards for Composer'
@@ -109,12 +95,6 @@ tasks:
       - task: composer
         vars:
           TASK_ARGS: audit
-      - task: composer
-        vars:
-          TASK_ARGS: normalize --dry-run
-      - task: composer
-        vars:
-          TASK_ARGS: validate --strict
 
   coding-standards:markdown:apply:
     desc: 'Apply coding standards for Markdown'
@@ -131,42 +111,12 @@ tasks:
         vars:
           TASK_ARGS: run --rm markdownlint '**/*.md'
 
-  coding-standards:php:apply:
-    desc: 'Apply coding standards for PHP'
-    cmd:
-      task: php
-      vars:
-        TASK_ARGS: vendor/bin/php-cs-fixer fix
-
-  coding-standards:php:check:
-    desc: 'Apply and check coding standards for PHP'
-    cmds:
-      - task: coding-standards:php:apply
-      - task: php
-        vars:
-          TASK_ARGS: vendor/bin/php-cs-fixer check
-
-  coding-standards:twig:apply:
-    desc: 'Apply coding standards for Twig'
-    cmds:
-      - task: php
-        vars:
-          TASK_ARGS: vendor/bin/twig-cs-fixer fix
-
-  coding-standards:twig:check:
-    desc: 'Apply and check coding standards for Twig'
-    cmds:
-      - task: coding-standards:twig:apply
-      - task: php
-        vars:
-          TASK_ARGS: vendor/bin/twig-cs-fixer check
-
   coding-standards:yaml:apply:
     desc: 'Apply coding standards for YAML'
     cmds:
       - task: compose
         vars:
-          TASK_ARGS: run --rm prettier --parser yaml phpstan*.neon '**/*.{yml,yaml}' --write
+          TASK_ARGS: run --rm prettier --parser yaml '**/*.{yml,yaml}' --write
 
   coding-standards:yaml:check:
     desc: 'Apply and check coding standards for YAML'
@@ -174,20 +124,7 @@ tasks:
       - task: coding-standards:yaml:apply
       - task: compose
         vars:
-          TASK_ARGS: run --rm prettier --parser yaml phpstan*.neon '**/*.{yml,yaml}' --check
-
-  code-analysis:
-    desc: 'Run code analysis'
-    cmds:
-      - task: code-analysis:phpstan
-
-  code-analysis:phpstan:
-    desc: 'Run PHPStan'
-    cmds:
-      - task: composer:install
-      - task: php
-        vars:
-          TASK_ARGS: vendor/bin/phpstan
+          TASK_ARGS: run --rm prettier --parser yaml '**/*.{yml,yaml}' --check
 
   compose:
     internal: true
@@ -209,10 +146,11 @@ tasks:
 
   datamodels:
     internal: true
-    cmd:
-      task: php
-      vars:
-        TASK_ARGS: 'bin/datamodels {{.TASK_ARGS}}'
+    cmds:
+      - task: composer:install
+      - task: php
+        vars:
+          TASK_ARGS: 'bin/datamodels {{.TASK_ARGS}}'
 
   mkdocs:
     internal: true
