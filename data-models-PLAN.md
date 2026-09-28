@@ -24,7 +24,7 @@ Goals:
 Two public faces, from one repo:
 
 | Who | Where | What |
-|---|---|---|
+| --- | --- | --- |
 | Broker, JSON-LD processors | `https://raw.githubusercontent.com/itk-enter/data-models/<Model>/v<version>/…` | Raw files at a pinned tag, immutable |
 | People, and anyone dereferencing an `$id` or term IRI | `https://itk-enter.github.io/data-models/…` | Docs site on GitHub Pages: rendered spec, Swagger UI, downloads, term pages |
 
@@ -45,7 +45,8 @@ Checked against the SDM repositories on 2026-09-28.
   - Its `generate_sql_schema` maps `model.yaml` types to PostgreSQL; phase 4
     ports that mapping to PHP, with attribution (MIT).
 - **Published formats**, taken from `dataModel.PointOfInterest/Museum`:
-  - `model.yaml`: `{ModelName: {description, properties: {attr: {description, type, x-ngsi: {model, type, units?}}}, required, type: object}}`,
+  - `model.yaml`:
+    `{ModelName: {description, properties: {attr: {description, type, x-ngsi: {model, type, units?}}}, required, type: object}}`,
     with `$ref`s resolved and nested objects expanded.
   - `swagger.yaml`: OpenAPI 3.0.0. `components.schemas.<Model>` `$ref`s the
     `model.yaml`, and one path `GET /ngsi-ld/v1/entities?type=<Model>`
@@ -78,7 +79,7 @@ Checked against the SDM repositories on 2026-09-28.
 Settle these before phase 1. Each has a recommendation.
 
 | # | Decision | Recommendation |
-|---|---|---|
+| --- | --- | --- |
 | D1 | Repo name and visibility | `itk-enter/data-models`, **public**. The broker dereferences `contextUrl`, so the context must be publicly reachable. "Not ready to share" then means not submitted to SDM, not secret. A model that must stay secret doesn't belong here. |
 | D2 | IRI namespace for our own terms | Our own namespace, `https://itk-enter.github.io/data-models/<subject>/<term>`. Don't mint IRIs in `smartdatamodels.org`, which we don't control. Common SDM terms keep their SDM IRIs, so `address`, `location` etc. stay interoperable. Put the namespace in one config value, so a model moving to SDM is a single change. The docs site (phase 6) gives each term IRI a page, so the IRIs resolve. |
 | D3 | Subject folder for PublicToilet | `dataModel.PointOfInterest/`. It matches SDM's likely home and the schema's current `$id`. |
@@ -92,7 +93,7 @@ Settle these before phase 1. Each has a recommendation.
 
 ## Target layout
 
-```
+```text
 data-models/
 ├── README.md                 # what this is, model index (generated table), how to use/pin
 ├── CLAUDE.md                 # conventions for agents: edit sources, never generated files
@@ -268,7 +269,8 @@ All output is deterministic (sorted keys, stable ordering,
 `templates/`.
 
 1. **Examples**, from `example.json` plus the parsed NGSI types:
-   - `example-normalized.json` (NGSI v2): `{type: <Text|Number|Boolean|StructuredValue|geo:json|DateTime|Relationship>, value}`
+   - `example-normalized.json` (NGSI v2):
+     `{type: <Text|Number|Boolean|StructuredValue|geo:json|DateTime|Relationship>, value}`
    - `example.jsonld` (NGSI-LD key-values): `example.json` plus `@context` (the subject context URL)
    - `example-normalized.jsonld` (NGSI-LD normalized): `{type: Property|Relationship|GeoProperty, value|object}`, plus `@context`
 
@@ -337,7 +339,7 @@ local preview. The site root is `https://itk-enter.github.io/data-models/`.
 **URL layout.** The paths are chosen so that `$id`s and D2 term IRIs
 resolve without redirects we'd have to maintain:
 
-```
+```text
 /                                          index: all models, status, latest version
 /<Subject>/context.jsonld                  latest subject context
 /<Subject>/<term>/                         term page          ← D2 term IRIs land here
@@ -411,10 +413,12 @@ unchanged.
 ### Phase 7: use it from `enter` (back in that project)
 
 1. In the PublicToilet Source(s), set:
+
    ```php
    model: 'PublicToilet',
    contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.1/dataModel.PointOfInterest/context.jsonld',
    ```
+
 2. Check `src/Controller/TestController.php`, which maps SDM model URLs to
    paths, e.g. `'https://smartdatamodels.org/dataModel.Parking/OnStreetParking' => 'Parking/OnStreetParking'`,
    and add the equivalent entry for our model if the test view needs it.

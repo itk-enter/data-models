@@ -28,10 +28,11 @@ tasks:
 
   test:
     desc: 'Run PHPUnit'
-    cmd:
-      task: php
-      vars:
-        TASK_ARGS: vendor/bin/phpunit
+    cmds:
+      - task: composer:install
+      - task: php
+        vars:
+          TASK_ARGS: vendor/bin/phpunit
 
   site:build:
     desc: 'Build the docs site into build/site/'
@@ -77,6 +78,7 @@ tasks:
   coding-standards:apply:
     desc: 'Apply coding standards'
     cmds:
+      - task: composer:install
       - task: coding-standards:composer:apply
       - task: coding-standards:markdown:apply
       - task: coding-standards:php:apply
@@ -86,6 +88,7 @@ tasks:
   coding-standards:check:
     desc: 'Apply and check coding standards'
     cmds:
+      - task: composer:install
       - task: coding-standards:composer:check
       - task: coding-standards:markdown:check
       - task: coding-standards:php:check
