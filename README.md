@@ -43,14 +43,24 @@ PHP 8.4 via `itkdev/php8.4-fpm`, run through [Task](https://taskfile.dev/) and
 commands; the main ones:
 
 ```shell
-task coding-standards:check   # Composer, Markdown and YAML checks
-task validate                 # validate a model, or all models
-task generate                 # regenerate a model's files, or all models
-task check                    # validate + generate + fail if the tree changed
-task site:build               # build the docs site
+task coding-standards:check    # Composer, Markdown, PHP, Twig and YAML checks
+task code-analysis             # PHPStan
+task test                      # PHPUnit
+task validate                  # validate a model, or all models
+task generate                  # regenerate a model's files, or all models
+task check                     # validate + generate + fail if the tree changed
+task site:build                # build the docs site into build/site/
+task site:serve                # serve a local preview of the docs site
+task release -- <Model>        # tag a release, e.g. `task release -- PublicToilet`
+task vendor:update             # refresh vendor-assets/ at the pinned versions
 ```
 
-`bin/datamodels` is the console entry point; it has no commands yet. Commands
-land one plan phase at a time, and each phase adds the PHP dependencies and
-dev tooling (PHPUnit, PHPStan, PHP CS Fixer, …) it actually needs, once
-there's real code under `src/` for them to check.
+`bin/datamodels` is the console entry point. Commands land one plan phase at
+a time, and each phase adds the PHP dependencies and dev tooling (PHPUnit,
+PHPStan, PHP CS Fixer, …) it actually needs, once there's real code under
+`src/` for them to check. `model:new` is the one command still to land.
+
+CI (`.github/workflows/ci.yml`) runs `code-analysis`, `test`, `check` and
+`site:build` on every PR and push to `main`. `release.yml` re-checks a
+`<Model>/v<version>` tag against the schema's own version. `pages.yml`
+deploys the docs site to GitHub Pages on push to `main` and on release tags.

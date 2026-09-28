@@ -18,6 +18,7 @@ final class Config
     public readonly string $commonSchemaRefUrl;
     public readonly string $commonSchemaSource;
     public readonly string $commonSchemaRef;
+    public readonly string $swaggerUiVersion;
 
     /**
      * @param array<string, mixed> $data
@@ -32,6 +33,7 @@ final class Config
         $this->commonSchemaRefUrl = $data['vendor']['common_schema']['ref_url'];
         $this->commonSchemaSource = $data['vendor']['common_schema']['source'];
         $this->commonSchemaRef = (string) $data['vendor']['common_schema']['ref'];
+        $this->swaggerUiVersion = (string) $data['vendor']['swagger_ui']['version'];
     }
 
     public static function fromFile(string $path): self

@@ -1,0 +1,15 @@
+# {{ term }}
+
+IRI: `{{ iri }}`
+
+{% if ngsiType %}Type: {{ ngsiType }}
+
+{% endif -%}
+{% if description %}{{ description }}
+
+{% endif -%}
+## Used by
+
+{% for usage in usages -%}
+- [{{ usage.model }} ({{ usage.version }})]({{ usage.href }})
+{% endfor %}

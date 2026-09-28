@@ -4,6 +4,9 @@
 require dirname(__DIR__).'/vendor/autoload.php';
 
 use ItkEnter\DataModels\Command\GenerateCommand;
+use ItkEnter\DataModels\Command\ReleaseCommand;
+use ItkEnter\DataModels\Command\SiteCheckCommand;
+use ItkEnter\DataModels\Command\SitePrepareCommand;
 use ItkEnter\DataModels\Command\ValidateCommand;
 use ItkEnter\DataModels\Command\VendorUpdateCommand;
 use Symfony\Component\Console\Application;
@@ -14,8 +17,10 @@ $application = new Application('itk-enter/data-models');
 $application->addCommand(new ValidateCommand($repoRoot));
 $application->addCommand(new VendorUpdateCommand($repoRoot));
 $application->addCommand(new GenerateCommand($repoRoot));
+$application->addCommand(new ReleaseCommand($repoRoot));
+$application->addCommand(new SitePrepareCommand($repoRoot));
+$application->addCommand(new SiteCheckCommand($repoRoot));
 
-// More commands are registered here as they land, one per phase of
-// data-models-PLAN.md: site:build, release, model:new.
+// model:new is registered here once it lands.
 
 $application->run();

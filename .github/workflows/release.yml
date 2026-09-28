@@ -1,0 +1,39 @@
+name: Release
+
+env:
+    COMPOSE_USER: runner
+
+on:
+    push:
+        tags:
+            - "*/v*"
+
+jobs:
+    check-tag:
+        name: Check the tag matches the schema's version, then re-run task check
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  fetch-depth: 0
+
+            - uses: go-task/setup-task@v2
+
+            - name: Create docker network
+              run: docker network create frontend
+
+            - name: Verify the tag matches the schema's version
+              run: |
+                  set -euo pipefail
+                  TAG="${GITHUB_REF_NAME}"
+                  MODEL="${TAG%%/*}"
+                  VERSION="${TAG#*/v}"
+                  SCHEMA=$(find . -path "*/${MODEL}/schema.json" -not -path "./tests/*" -not -path "./vendor/*")
+                  SCHEMA_VERSION=$(docker compose run --rm --no-deps phpfpm php -r "echo json_decode(file_get_contents('${SCHEMA}'), true)['x-version'];")
+                  if [ "$VERSION" != "$SCHEMA_VERSION" ]; then
+                    echo "::error::Tag version (${VERSION}) does not match ${MODEL}'s x-version (${SCHEMA_VERSION})"
+                    exit 1
+                  fi
+
+            - name: Validate, regenerate and fail if the tree changed
+              run: task check
