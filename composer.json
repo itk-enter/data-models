@@ -1,0 +1,21 @@
+{
+    "name": "itk-enter/data-models",
+    "description": "NGSI-LD data models for the itk-enter project, with tooling to validate each model and generate its documentation, Swagger, SQL schema and examples.",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=8.4",
+        "symfony/console": "~8.1.6"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "ItkEnter\\DataModels\\": "src/"
+        }
+    },
+    "config": {
+        "bump-after-update": true,
+        "sort-packages": true
+    }
+}

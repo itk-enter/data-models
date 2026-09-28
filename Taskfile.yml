@@ -1,0 +1,172 @@
+version: '3'
+
+# https://taskfile.dev/usage/#env-files
+dotenv: ['.env.local', '.env']
+
+tasks:
+  validate:
+    desc: 'Validate a model, or all models if none given, e.g. `task {{.TASK}} -- PublicToilet`'
+    cmd:
+      task: datamodels
+      vars:
+        TASK_ARGS: 'validate {{.CLI_ARGS}}'
+
+  generate:
+    desc: "Generate a model's files, or all models if none given, e.g. `task {{.TASK}} -- PublicToilet`"
+    cmd:
+      task: datamodels
+      vars:
+        TASK_ARGS: 'generate {{.CLI_ARGS}}'
+
+  check:
+    desc: 'Validate, regenerate and fail if the working tree changed (what CI runs)'
+    cmds:
+      - task: validate
+      - task: generate
+      - cmd: git diff --exit-code
+        ignore_error: false
+
+  site:build:
+    desc: 'Build the docs site into build/site/'
+    cmds:
+      - task: datamodels
+        vars:
+          TASK_ARGS: site:prepare
+      - task: mkdocs
+        vars:
+          TASK_ARGS: build -f site/mkdocs.yml
+
+  site:serve:
+    desc: 'Serve a local preview of the docs site'
+    cmds:
+      - task: datamodels
+        vars:
+          TASK_ARGS: site:prepare
+      - task: mkdocs
+        vars:
+          TASK_ARGS: 'serve -f site/mkdocs.yml --dev-addr 0.0.0.0:8000'
+
+  release:
+    desc: 'Tag a model release, e.g. `task {{.TASK}} -- PublicToilet`'
+    cmd:
+      task: datamodels
+      vars:
+        TASK_ARGS: 'release {{.CLI_ARGS}}'
+
+  vendor:update:
+    desc: 'Refresh vendor-assets/ (common-schema, swagger-ui) at the pinned versions and verify checksums'
+    cmd:
+      task: datamodels
+      vars:
+        TASK_ARGS: 'vendor:update'
+
+  model:new:
+    desc: 'Scaffold a model folder from a template, e.g. `task {{.TASK}} -- dataModel.PointOfInterest NewModel`'
+    cmd:
+      task: datamodels
+      vars:
+        TASK_ARGS: 'model:new {{.CLI_ARGS}}'
+
+  coding-standards:apply:
+    desc: 'Apply coding standards'
+    cmds:
+      - task: coding-standards:composer:apply
+      - task: coding-standards:markdown:apply
+      - task: coding-standards:yaml:apply
+
+  coding-standards:check:
+    desc: 'Apply and check coding standards'
+    cmds:
+      - task: coding-standards:composer:check
+      - task: coding-standards:markdown:check
+      - task: coding-standards:yaml:check
+
+  coding-standards:composer:apply:
+    desc: 'Apply coding standards for Composer'
+    cmd:
+      task: composer
+      vars:
+        TASK_ARGS: validate --strict
+
+  coding-standards:composer:check:
+    desc: 'Apply and check coding standards for Composer'
+    cmds:
+      - task: coding-standards:composer:apply
+      - task: composer
+        vars:
+          TASK_ARGS: audit --locked
+
+  coding-standards:markdown:apply:
+    desc: 'Apply coding standards for Markdown'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm markdownlint '**/*.md' --fix
+
+  coding-standards:markdown:check:
+    desc: 'Apply and check coding standards for Markdown'
+    cmds:
+      - task: coding-standards:markdown:apply
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm markdownlint '**/*.md'
+
+  coding-standards:yaml:apply:
+    desc: 'Apply coding standards for YAML'
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm prettier --parser yaml '**/*.{yml,yaml}' --write
+
+  coding-standards:yaml:check:
+    desc: 'Apply and check coding standards for YAML'
+    cmds:
+      - task: coding-standards:yaml:apply
+      - task: compose
+        vars:
+          TASK_ARGS: run --rm prettier --parser yaml '**/*.{yml,yaml}' --check
+
+  compose:
+    internal: true
+    cmd: 'docker compose {{.TASK_ARGS}} {{.CLI_ARGS}}'
+
+  composer:
+    internal: true
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: run --rm --no-deps phpfpm composer {{.TASK_ARGS}}
+
+  composer:install:
+    internal: true
+    cmd:
+      task: composer
+      vars:
+        TASK_ARGS: install
+
+  datamodels:
+    internal: true
+    cmds:
+      - task: composer:install
+      - task: php
+        vars:
+          TASK_ARGS: 'bin/datamodels {{.TASK_ARGS}}'
+
+  mkdocs:
+    internal: true
+    cmd:
+      task: compose
+      vars:
+        TASK_ARGS: 'run --rm mkdocs {{.TASK_ARGS}}'
+
+  php:
+    internal: true
+    cmds:
+      - task: compose
+        vars:
+          TASK_ARGS: 'run --rm --no-deps phpfpm php {{.TASK_ARGS}}'
+
+  default:
+    cmds:
+      - task --list-all
+    silent: true
