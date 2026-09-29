@@ -1,0 +1,13 @@
+# itk-enter/data-models
+
+Our own NGSI-LD data models, laid out like the [Smart Data Models](https://smartdatamodels.org/) program.
+
+{% for subject in subjects %}
+## {{ subject.name }}
+
+| Model | Version | Status | Links |
+| --- | --- | --- | --- |
+{% for model in subject.models -%}
+| {{ model.name }} | {{ model.version }} | {{ model.status }} | {{ model.links|raw }} |
+{% endfor %}
+{% endfor %}

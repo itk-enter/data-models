@@ -1,0 +1,35 @@
+# Configuration for the itk-enter/data-models tooling.
+#
+# The validator, generators and docs site all read published URLs from
+# here, so that a model moving from our own namespace to Smart Data Models
+# is a single change.
+
+# Our own IRI namespace for terms and model types that aren't already SDM
+# common-schema terms. Common terms (address, location, …) keep their
+# smartdatamodels.org IRIs; only terms defined for the first time in this
+# repo's subjects use this one.
+namespace: https://itk-enter.github.io/data-models
+
+urls:
+    # Immutable, per-tag: what a broker's contextUrl and Source pin.
+    raw: https://raw.githubusercontent.com/itk-enter/data-models
+    # Latest-by-default: what people and term/model IRIs resolve to.
+    pages: https://itk-enter.github.io/data-models
+    repo: https://github.com/itk-enter/data-models
+    # What x-license-url's GitHub blob links point at.
+    default_branch: main
+
+# Third-party files vendored under vendor-assets/, pinned so validation and
+# the docs site build offline and reproducibly. `task vendor:update`
+# refreshes vendor-assets/ at these pins.
+vendor:
+    common_schema:
+        # Where schema.json's own $refs point; vendor-assets/common-schema.json
+        # is registered under this URI so opis/json-schema resolves them
+        # offline instead of fetching it.
+        ref_url: https://smart-data-models.github.io/data-models/common-schema.json
+        # Where `vendor:update` fetches the pinned copy from.
+        source: https://raw.githubusercontent.com/smart-data-models/data-models/{ref}/common-schema.json
+        ref: 80c8cfb07c56478058eb1b5d8e9d9908c844e300
+    swagger_ui:
+        version: 5.33.0

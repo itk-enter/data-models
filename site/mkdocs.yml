@@ -1,0 +1,12 @@
+site_name: itk-enter/data-models
+site_url: https://itk-enter.github.io/data-models/
+repo_url: https://github.com/itk-enter/data-models
+
+docs_dir: ../build/docs
+site_dir: ../build/site
+
+theme:
+    name: material
+
+markdown_extensions:
+    - md_in_html
