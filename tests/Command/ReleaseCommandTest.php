@@ -12,7 +12,7 @@ use Symfony\Component\Process\Process;
 
 /**
  * Exercises release against a throwaway git repo, seeded from the real
- * (already-valid, per phase 3's tests) PublicToilet model — never the
+ * (already-valid) PublicToilet model — never the
  * project's own repo. release only tags locally (the Taskfile's `release`
  * task pushes separately, on the host — see Taskfile.yml), so nothing
  * here touches a remote.

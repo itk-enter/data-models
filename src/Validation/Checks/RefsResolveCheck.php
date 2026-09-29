@@ -11,7 +11,7 @@ use Opis\JsonSchema\Exceptions\SchemaException;
 use Opis\JsonSchema\Exceptions\UnresolvedReferenceException;
 
 /**
- * Check 2: every `$ref` resolves against vendor-assets/common-schema.json,
+ * Every `$ref` resolves against vendor-assets/common-schema.json,
  * offline. `allOf` evaluates every branch regardless of the instance, so
  * validating an empty object still exercises every `$ref` reachable from
  * the schema's top level.

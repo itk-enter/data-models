@@ -6,8 +6,8 @@ use ItkEnter\DataModels\Config;
 use ItkEnter\DataModels\Model\DereferencedModel;
 
 /**
- * Generates a subject's context.jsonld (phase 4, point 3): the model type
- * names and this subject's own terms map to the D2 namespace; common-schema
+ * Generates a subject's context.jsonld: the model type
+ * names and this subject's own terms map to our own namespace; common-schema
  * terms map to smartdatamodels.org. Only top-level property names become
  * terms — deeply nested structural terms (e.g. GeoJSON's `coordinates`)
  * are common vocabulary, not this subject's, and aren't scoped here.

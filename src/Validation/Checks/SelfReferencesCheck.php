@@ -8,7 +8,7 @@ use ItkEnter\DataModels\Validation\Check;
 use ItkEnter\DataModels\Validation\ValidationError;
 
 /**
- * Check 6: $id, x-model-schema and x-license-url equal the URLs derived
+ * $id, x-model-schema and x-license-url equal the URLs derived
  * from config.yaml for this model's folder.
  */
 final class SelfReferencesCheck implements Check

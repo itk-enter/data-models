@@ -5,12 +5,11 @@ namespace ItkEnter\DataModels\Generator;
 use ItkEnter\DataModels\Model\DereferencedModel;
 
 /**
- * Generates schema.sql (phase 4, point 5): a PHP port of
+ * Generates schema.sql: a PHP port of
  * `generate_sql_schema`'s model.yaml-to-PostgreSQL type mapping, from
  * https://github.com/smart-data-models/data-models/blob/master/pysmartdatamodels/pysmartdatamodels/pysmartdatamodels.py,
  * © the FIWARE Foundation and contributors to the Smart Data Models
- * program, Apache License 2.0 (the plan says MIT; the actual upstream
- * file is Apache-2.0, which is what this credits).
+ * program, Apache License 2.0.
  *
  * `id` is always `TEXT PRIMARY KEY`, matching the original; unlike the
  * original, a property that reaches none of the type/format/enum/oneOf

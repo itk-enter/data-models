@@ -1,20 +1,19 @@
 # Configuration for the itk-enter/data-models tooling.
 #
-# The validator (phase 3), generators (phase 4) and docs site (phase 6) all
-# read published URLs from here, so that a model moving from our own
-# namespace to Smart Data Models (D2 in data-models-PLAN.md) is a single
-# change.
+# The validator, generators and docs site all read published URLs from
+# here, so that a model moving from our own namespace to Smart Data Models
+# is a single change.
 
 # Our own IRI namespace for terms and model types that aren't already SDM
-# common-schema terms (D2). Common terms (address, location, …) keep their
+# common-schema terms. Common terms (address, location, …) keep their
 # smartdatamodels.org IRIs; only terms defined for the first time in this
 # repo's subjects use this one.
 namespace: https://itk-enter.github.io/data-models
 
 urls:
-    # Immutable, per-tag: what a broker's contextUrl and Source pin (D8).
+    # Immutable, per-tag: what a broker's contextUrl and Source pin.
     raw: https://raw.githubusercontent.com/itk-enter/data-models
-    # Latest-by-default: what people and term/model IRIs resolve to (phase 6).
+    # Latest-by-default: what people and term/model IRIs resolve to.
     pages: https://itk-enter.github.io/data-models
     repo: https://github.com/itk-enter/data-models
     # What x-license-url's GitHub blob links point at.

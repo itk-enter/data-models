@@ -12,7 +12,7 @@ use ItkEnter\DataModels\Validation\Checks\SelfReferencesCheck;
 use ItkEnter\DataModels\Validation\Checks\VersionConsistencyCheck;
 
 /**
- * Runs every check from data-models-PLAN.md's phase 3 against a model.
+ * Runs every validation check against a model.
  */
 final class ModelValidator
 {

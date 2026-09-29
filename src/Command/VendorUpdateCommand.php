@@ -56,7 +56,7 @@ final class VendorUpdateCommand extends Command
 
     /**
      * Fetches the npm tarball for the pinned swagger-ui-dist version and
-     * vendors only what the docs site embeds (phase 6): the bundle JS,
+     * vendors only what the docs site embeds: the bundle JS,
      * its CSS, and the licence.
      */
     private function updateSwaggerUi(Config $config, OutputInterface $output): bool

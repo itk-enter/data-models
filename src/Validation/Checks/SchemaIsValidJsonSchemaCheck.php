@@ -11,7 +11,7 @@ use Opis\JsonSchema\Exceptions\ParseException;
 use Opis\JsonSchema\Exceptions\SchemaException;
 
 /**
- * Check 1: schema.json is valid JSON Schema 2020-12 (structurally — opis
+ * schema.json is valid JSON Schema 2020-12 (structurally — opis
  * can parse it). Unresolved `$ref`s are RefsResolveCheck's concern, not
  * this one's.
  */

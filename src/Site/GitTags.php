@@ -5,7 +5,7 @@ namespace ItkEnter\DataModels\Site;
 use Symfony\Component\Process\Process;
 
 /**
- * The `git tag`/`git archive` calls site:prepare needs (phase 6, step 1).
+ * The `git tag`/`git archive` calls site:prepare needs.
  * CI must check out with `fetch-depth: 0` for tags to be visible.
  */
 final class GitTags

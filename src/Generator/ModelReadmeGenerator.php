@@ -7,7 +7,7 @@ use ItkEnter\DataModels\Model\DereferencedModel;
 use Twig\Environment;
 
 /**
- * Generates a model's README.md (phase 4, point 7): status, current
+ * Generates a model's README.md: status, current
  * version, a pinnable contextUrl for the (eventual) latest tag, and links
  * to spec, schema, examples and swagger.
  */

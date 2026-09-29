@@ -10,10 +10,10 @@ use Symfony\Component\Yaml\Yaml;
 use Twig\Environment;
 
 /**
- * site:prepare (phase 6): writes a MkDocs source tree to build/docs/, one
+ * site:prepare: writes a MkDocs source tree to build/docs/, one
  * folder per released `<Model>/v<version>` tag plus an unversioned
  * "latest" alias, from git history — never from the live working tree,
- * since a tag is what's actually published (D8).
+ * since a tag is what's actually published.
  */
 final class SiteBuilder
 {

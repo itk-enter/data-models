@@ -5,7 +5,7 @@ namespace ItkEnter\DataModels;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * The repository's config.yaml: the IRI namespace (D2), public base URLs,
+ * The repository's config.yaml: the IRI namespace, public base URLs,
  * and the vendored third-party file pins.
  */
 final class Config

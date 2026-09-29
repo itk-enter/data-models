@@ -3,7 +3,7 @@
 namespace ItkEnter\DataModels\Model;
 
 /**
- * The phase 4 loader: dereferences a ModelFolder's schema.json into a
+ * Dereferences a ModelFolder's schema.json into a
  * DereferencedModel, against the vendored common-schema.json.
  */
 final class ModelLoader

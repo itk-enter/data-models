@@ -6,7 +6,7 @@ use ItkEnter\DataModels\Config;
 use ItkEnter\DataModels\Model\DereferencedModel;
 
 /**
- * Generates the root README.md's model index (phase 4, point 8): a table
+ * Generates the root README.md's model index: a table
  * of subject, model, version, status and links, written between the
  * `<!-- model-index:start -->` / `<!-- model-index:end -->` markers.
  */
@@ -42,7 +42,7 @@ final class RootReadmeIndexGenerator
     private function table(array $models): string
     {
         if ([] === $models) {
-            return 'No models have been imported yet (see `data-models-PLAN.md`, phase 2).';
+            return 'No models have been imported yet.';
         }
 
         usort($models, static fn (DereferencedModel $a, DereferencedModel $b) => $a->folder->name <=> $b->folder->name);

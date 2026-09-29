@@ -6,7 +6,7 @@ use ItkEnter\DataModels\Model\DereferencedModel;
 use ItkEnter\DataModels\Model\DescriptionParser;
 
 /**
- * Generates model.yaml (phase 4, point 2): SDM's format,
+ * Generates model.yaml in SDM's format,
  * `{ModelName: {description, properties, required, type: object}}`, with
  * each property's `x-ngsi` derived from its description.
  */

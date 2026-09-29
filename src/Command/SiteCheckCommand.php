@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * The phase 6 build checks, run against build/site/ after `mkdocs build`.
+ * The docs site build checks, run against build/site/ after `mkdocs build`.
  */
 #[AsCommand(name: 'site:check', description: 'Check the built docs site for broken $ids, IRIs and $refs')]
 final class SiteCheckCommand extends Command
