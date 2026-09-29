@@ -9,6 +9,7 @@ on:
             - main
         tags:
             - "*/v*"
+    workflow_dispatch:
 
 concurrency:
     group: pages
@@ -20,11 +21,28 @@ permissions:
     id-token: write
 
 jobs:
+    # A release tag points at the commit main has just deployed, and
+    # actions/deploy-pages uses that commit as the Pages build version.
+    # Pages then keeps serving the earlier build of that commit when the
+    # deploy comes from a tag push, although the run reports success. A
+    # manual run of the same commit does replace it, so a tag push starts
+    # one on main instead of deploying itself.
+    # https://github.com/actions/deploy-pages/issues/383
+    redispatch:
+        name: Redeploy from main
+        if: github.ref_type == 'tag'
+        runs-on: ubuntu-latest
+        permissions:
+            actions: write
+        steps:
+            - run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+              env:
+                  GH_TOKEN: ${{ github.token }}
+
     build:
         name: Build the docs site
+        if: github.ref_type != 'tag'
         runs-on: ubuntu-latest
-        outputs:
-            artifact_id: ${{ steps.upload.outputs.artifact_id }}
         steps:
             - uses: actions/checkout@v7
               with:
@@ -40,7 +58,6 @@ jobs:
               run: task site:build
 
             - uses: actions/upload-pages-artifact@v3
-              id: upload
               with:
                   path: build/site
 
@@ -52,49 +69,6 @@ jobs:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
         steps:
-            # Not actions/deploy-pages: it uses the commit SHA as the Pages
-            # build version, and Pages treats a second deploy of the same
-            # version as already done. A release tag points at the commit
-            # main just deployed (before the tag existed), so its deploy
-            # would never go live. Adding the run ID and attempt makes every
-            # run's version unique.
             - name: Deploy to GitHub Pages
               id: deployment
-              uses: actions/github-script@v9
-              env:
-                  ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
-              with:
-                  script: |
-                      const version = `${context.sha}-${context.runId}-${process.env.GITHUB_RUN_ATTEMPT}`;
-                      const { data: deployment } = await github.request('POST /repos/{owner}/{repo}/pages/deployments', {
-                          ...context.repo,
-                          artifact_id: Number(process.env.ARTIFACT_ID),
-                          pages_build_version: version,
-                          oidc_token: await core.getIDToken(),
-                      });
-                      const id = deployment.id ?? version;
-                      core.info(`Created deployment ${version}, ID: ${id}`);
-
-                      const failed = ['deployment_failed', 'deployment_perms_error', 'deployment_content_failed', 'deployment_cancelled', 'deployment_lost'];
-                      const deadline = Date.now() + 10 * 60 * 1000;
-                      while (Date.now() < deadline) {
-                          await new Promise((resolve) => setTimeout(resolve, 5000));
-                          const { data } = await github.request('GET /repos/{owner}/{repo}/pages/deployments/{deployment_id}', {
-                              ...context.repo,
-                              deployment_id: id,
-                          });
-                          core.info(`Status: ${data.status}`);
-                          if (data.status === 'succeed') {
-                              core.setOutput('page_url', deployment.page_url);
-                              return;
-                          }
-                          if (failed.includes(data.status)) {
-                              core.setFailed(`Pages deployment ${data.status}`);
-                              return;
-                          }
-                      }
-                      await github.request('POST /repos/{owner}/{repo}/pages/deployments/{deployment_id}/cancel', {
-                          ...context.repo,
-                          deployment_id: id,
-                      });
-                      core.setFailed('Pages deployment timed out');
+              uses: actions/deploy-pages@v4
