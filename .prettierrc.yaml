@@ -1,0 +1,25 @@
+# This file is copied from config/symfony/yaml/.prettierrc.yaml in https://github.com/itk-dev/devops_itkdev-docker.
+# Feel free to edit the file, but consider making a pull request if you find a general issue with the file.
+
+# https://prettier.io/docs/configuration
+#
+# ITK Dev's own GitHub Actions template for this file (yaml.yaml) checks
+# YAML with `--no-editorconfig`, so `.editorconfig`'s indent_size doesn't
+# apply there — only what's configured here does. Set explicitly, or
+# every file in this repo but Taskfile.yml gets prettier's own 2-space
+# default in that one check, disagreeing with `task coding-standards:yaml`
+# (which does see .editorconfig) and with the files themselves.
+tabWidth: 4
+
+overrides:
+    # https://taskfile.dev/docs/styleguide
+    - files:
+          - "Taskfile.{yml,yaml}"
+      options:
+          tabWidth: 2
+          singleQuote: true
+    # Kept in the 2-space style of the itk-sbx template it comes from.
+    - files:
+          - "sbxenv.yaml"
+      options:
+          tabWidth: 2

@@ -1,0 +1,33 @@
+# {{ name }}
+
+Status: {{ status }} · Version: {{ version }}{% if isLatest %} (latest){% endif %}{{ versionsLine }}
+
+{{ specBody }}
+
+<div id="swagger-ui"></div>
+<link rel="stylesheet" href="{{ rootPath }}assets/swagger-ui.css">
+<script src="{{ rootPath }}assets/swagger-ui-bundle.js"></script>
+<script>
+window.addEventListener('load', function () {
+  SwaggerUIBundle({url: 'swagger.yaml', dom_id: '#swagger-ui', supportedSubmitMethods: []});
+});
+</script>
+
+## Downloads
+
+- [Schema](schema.json)
+- [model.yaml](model.yaml)
+- [swagger.yaml](swagger.yaml)
+- [schema.sql](schema.sql)
+- [Example, key-values](examples/example.json)
+- [Example, NGSI v2 normalized](examples/example-normalized.json)
+- [Example, NGSI-LD key-values](examples/example.jsonld)
+- [Example, NGSI-LD normalized](examples/example-normalized.jsonld)
+- [Context](context.jsonld)
+
+## Pin this version in `enter`
+
+```php
+model: '{{ name }}',
+contextUrl: '{{ contextUrl }}',
+```

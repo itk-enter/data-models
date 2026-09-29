@@ -1,0 +1,40 @@
+# itk-version: 3.2.4
+services:
+    phpfpm:
+        image: itkdev/php8.4-fpm:latest
+        user: ${COMPOSE_USER:-deploy}
+        environment:
+            - PHP_XDEBUG_MODE=${PHP_XDEBUG_MODE:-off}
+            - PHP_MAX_EXECUTION_TIME=30
+            - PHP_MEMORY_LIMIT=256M
+            - PHP_IDE_CONFIG=serverName=localhost
+        volumes:
+            - .:/app
+
+    # Docs site: renders the Markdown tree the PHP tool writes to
+    # build/docs/ into build/site/.
+    mkdocs:
+        image: squidfunk/mkdocs-material:9.7.7
+        profiles:
+            - dev
+        volumes:
+            - .:/docs
+
+    # Code checks tools
+    markdownlint:
+        image: itkdev/markdownlint
+        profiles:
+            - dev
+        volumes:
+            - ./:/md
+
+    prettier:
+        # Prettier does not (yet, fcf.
+        # https://github.com/prettier/prettier/issues/15206) have an official
+        # docker image.
+        # https://hub.docker.com/r/jauderho/prettier is good candidate (cf. https://hub.docker.com/search?q=prettier&sort=updated_at&order=desc)
+        image: jauderho/prettier
+        profiles:
+            - dev
+        volumes:
+            - ./:/work
