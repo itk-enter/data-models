@@ -18,3 +18,8 @@ overrides:
       options:
           tabWidth: 2
           singleQuote: true
+    # Kept in the 2-space style of the itk-sbx template it comes from.
+    - files:
+          - "sbxenv.yaml"
+      options:
+          tabWidth: 2

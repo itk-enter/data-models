@@ -67,4 +67,3 @@ bindings:
 # expands ${LEANTIME_DOMAIN} in both the url and headers of an http MCP server.
 env:
   LEANTIME_DOMAIN: ${{ env.args.leantime_domain }}
-
