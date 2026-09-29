@@ -105,10 +105,6 @@ final class ReleaseCommandTest extends TestCase
         );
         $this->filesystem->mkdir("{$this->repo}/templates");
         $this->filesystem->mirror("{$this->projectRoot}/templates", "{$this->repo}/templates");
-        file_put_contents(
-            "{$this->repo}/README.md",
-            "<!-- model-index:start -->\n<!-- model-index:end -->\n",
-        );
     }
 
     /**

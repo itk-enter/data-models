@@ -1,64 +1,56 @@
 # itk-enter/data-models
 
-A home for `itk-enter`'s own NGSI-LD data models: one folder per model, laid
-out like the [Smart Data Models](https://smartdatamodels.org/) (SDM) program,
-with tooling that validates each model and generates the files SDM would
-otherwise generate on acceptance (`model.yaml`, `swagger.yaml`, `schema.sql`,
-`doc/spec.md`, examples in every format, the subject `context.jsonld`), plus
-a documentation site on GitHub Pages.
+This repo holds the NGSI-LD data models that `itk-enter` publishes itself,
+when no existing [Smart Data Models](https://smartdatamodels.org/) (SDM) model fits
+the data we publish.
 
-Two public faces, from one repo:
+Browse the models on the docs site: <https://itk-enter.github.io/data-models/>
+
+## How this relates to Smart Data Models
+
+SDM is the shared catalogue of NGSI-LD data models used across FIWARE
+projects. A model in SDM is a folder with a `schema.json`, a few metadata
+files and an example; once SDM accepts a model, its own tooling generates
+everything else (a spec page, `model.yaml`, `swagger.yaml`, examples in
+every NGSI format, a JSON-LD `@context`) and hosts it.
+
+Our models aren't in SDM, so nothing generates or hosts those files for us.
+This repo fills that gap:
+
+- Each model uses SDM's folder layout and conventions, so it looks and
+  behaves like an SDM model, reuses SDM's common definitions (address,
+  location, contact point, …) and can be submitted to SDM later without
+  being rewritten.
+- The tooling here checks each model and generates the files SDM would
+  have generated.
+- Releases are git tags, and GitHub serves the files: raw files at a
+  pinned tag for machines, and a docs site for people.
 
 | Who | Where | What |
 | --- | --- | --- |
-| Broker, JSON-LD processors | `https://raw.githubusercontent.com/itk-enter/data-models/<Model>/v<version>/…` | Raw files at a pinned tag, immutable |
-| People, anyone dereferencing an IRI | `https://itk-enter.github.io/data-models/…` | Docs site: rendered spec, Swagger UI, downloads, term pages |
-
-## Model index
-
-<!-- model-index:start -->
-
-| Subject | Model | Version | Status | Links |
-| --- | --- | --- | --- | --- |
-| dataModel.PointOfInterest | PublicToilet | 0.0.1 | own model | [Spec](https://itk-enter.github.io/data-models/dataModel.PointOfInterest/PublicToilet/) |
-
-<!-- model-index:end -->
+| Broker, JSON-LD processors | `https://raw.githubusercontent.com/itk-enter/data-models/<Model>/v<version>/…` | Raw files at a pinned tag, never changed after release |
+| People, anyone following a term's IRI | `https://itk-enter.github.io/data-models/…` | Docs site: spec, Swagger UI, downloads, a page per term |
 
 ## Using a model from `enter`
 
-Once a model is tagged, pin it in a Source by its raw tag URL, e.g.:
+Pin a released model in the `enter` Source by its tagged `context.jsonld`:
 
 ```php
 model: 'PublicToilet',
 contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.1/dataModel.PointOfInterest/context.jsonld',
 ```
 
-## Development
+The URL contains the version tag, so `enter` keeps using exactly that
+version until you change the URL. Each model's own `README.md` shows the
+line to use for its latest release, and [`CHANGELOG.md`](CHANGELOG.md) lists
+what changed in each release.
 
-PHP 8.4 via `itkdev/php8.4-fpm`, run through [Task](https://taskfile.dev/) and
-`docker compose`, the same as `itk-enter/enter`. See `task --list-all` for all
-commands; the main ones:
+## Documentation
 
-```shell
-task coding-standards:check    # Composer, Markdown, PHP, Twig and YAML checks
-task code-analysis             # PHPStan
-task test                      # PHPUnit
-task validate                  # validate a model, or all models
-task generate                  # regenerate a model's files, or all models
-task check                     # validate + generate + fail if the tree changed
-task site:build                # build the docs site into build/site/
-task site:serve                # serve a local preview of the docs site
-task release -- <Model>        # tag a release, e.g. `task release -- PublicToilet`
-task vendor:update             # refresh vendor-assets/ at the pinned versions
-```
-
-`bin/datamodels` is the console entry point. `model:new` has a Taskfile
-entry but isn't implemented yet.
-
-CI (`.github/workflows/ci.yml`) runs `code-analysis`, `test`, `check` and
-`site:build` on every PR and push to `main`. `release.yml` re-checks a
-`<Model>/v<version>` tag against the schema's own version. `pages.yml`
-deploys the docs site to GitHub Pages on push to `main` and on release tags.
+- [Data models](docs/data-models.md): why a model folder looks the way it
+  does, how to add or change a model, and how to release one.
+- [Project structure and commands](docs/project-structure.md): what the
+  files in this repo are for, and what each `task` command does.
 
 ## Submitting a model to SDM
 
