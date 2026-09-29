@@ -84,7 +84,7 @@ validate, the generated files are out of date, or the version is already
 released. Otherwise it creates the git tag `<Model>/v<version>` and pushes
 it to GitHub, which runs the release checks and redeploys the docs site.
 Run it from your own terminal: the tag push uses your git credentials. The
-full flow is in [Data models](data-models.md#releasing-a-model).
+full flow is in [Data models](data-models.md#changing-and-releasing-a-model).
 
 ## `task site:build`
 

@@ -39,7 +39,7 @@ tooling only looks for models in folders named that way.
 | `examples/example.json` | One example entity, written as plain key-values. It must validate against `schema.json`. |
 | `notes.yaml` | Free-text notes shown on the spec page (`notesHeader`, `notesMiddle`, `notesFooter`), plus an optional `status` (defaults to "own model"). |
 | `ADOPTERS.yaml` | Who uses the model. |
-| `LICENSE.md` | The model's licence (CC BY 4.0 for PublicToilet). |
+| `LICENSE.md` | The model's licence |
 
 ### The files the tooling writes
 
@@ -96,65 +96,101 @@ start from an existing model:
    `task generate -- NewModel`.
 6. Commit the source files and the generated ones, and open a PR.
 
-A new model shows up on the docs site once it's released. Until then, the
-site's front page lists it as unreleased, with a link to its folder on
-GitHub.
+Once the PR is merged, release it as `0.0.1` by following
+[2. Release it](#2-release-it) below. Until then, the docs site's front
+page lists it as unreleased, with a link to its folder on GitHub.
 
-## Changing a model
-
-1. Edit the source files (usually `schema.json` and `examples/example.json`).
-2. Bump the version in `schema.json`: set both `x-version` and
-   `$schemaVersion`. Released versions never change, so any change to a
-   released model needs a new version:
-   - **patch** (`0.0.1` → `0.0.2`): wording and description fixes,
-   - **minor** (`0.1.0`): new optional properties,
-   - **major** (`1.0.0`): anything that can break existing data, such as
-     removing or renaming a property or making one required.
-3. Run `task validate -- <Model>` and `task generate -- <Model>`.
-4. Add an entry to [`CHANGELOG.md`](../CHANGELOG.md).
-5. Commit everything and open a PR.
-
-Merging the PR doesn't release anything: `enter` keeps using the version
-it's pinned to until you release the new one and update the pin.
-
-## Releasing a model
+## Changing and releasing a model
 
 A release is a git tag named `<Model>/v<version>`, e.g.
-`PublicToilet/v0.0.1`. The tag is what gets published, not `main`: raw file
-URLs and the versioned pages on the docs site are all built from tags.
+`PublicToilet/v0.0.2`. **You never type the tag yourself.** `task release`
+reads the version from `x-version` in the model's `schema.json` and builds
+the tag from it. So the one thing that decides the version is the number
+you write in `schema.json`.
 
-1. Get the change merged to `main`, then update your local copy:
+The example below changes PublicToilet from `0.0.1` to `0.0.2`.
+
+### 1. Make the change
+
+1. Create a branch:
 
    ```shell
    git checkout main
    git pull
+   git checkout -b publictoilet-0.0.2
    ```
 
-2. Run the release, from the host (not inside a container):
+2. Edit `dataModel.PointOfInterest/PublicToilet/schema.json` (and
+   `examples/example.json` if the example should change too).
+
+3. In the same `schema.json`, change **both** version fields to the new
+   version:
+
+   ```json
+   "$schemaVersion": "0.0.2",
+   "x-version": "0.0.2",
+   ```
+
+   Pick the new number like this:
+
+   | Change | Bump | Example |
+   | --- | --- | --- |
+   | Fixes to wording or descriptions | last number | `0.0.1` → `0.0.2` |
+   | New optional properties | middle number | `0.0.2` → `0.1.0` |
+   | Removed, renamed or newly required properties | first number | `0.1.0` → `1.0.0` |
+
+4. Run:
 
    ```shell
+   task validate -- PublicToilet
+   task generate -- PublicToilet
+   ```
+
+   `validate` must pass. `generate` rewrites the generated files, which
+   you commit along with your change.
+
+5. Add a section for the new version to [`CHANGELOG.md`](../CHANGELOG.md).
+
+6. Commit, push and open a PR:
+
+   ```shell
+   git add -A
+   git commit -m "PublicToilet 0.0.2: <what changed>"
+   git push -u origin publictoilet-0.0.2
+   ```
+
+7. Merge the PR once CI is green. Nothing is released yet: `enter` still
+   uses `0.0.1`.
+
+### 2. Release it
+
+1. Get the merged change and run the release, in your own terminal:
+
+   ```shell
+   git checkout main
+   git pull
    task release -- PublicToilet
    ```
 
-   This stops with an error if the working tree has uncommitted changes, if
-   the model doesn't validate, if the generated files aren't up to date, or
-   if the tag already exists. Otherwise it creates the tag
-   `<Model>/v<x-version>` and pushes it to GitHub.
+   This reads `0.0.2` from `schema.json`, creates the tag
+   `PublicToilet/v0.0.2` and pushes it to GitHub. It stops without
+   tagging if:
+   - you have uncommitted changes: commit or stash them,
+   - the model doesn't validate, or its generated files are out of date:
+     fix it in a new PR,
+   - the tag already exists: you forgot to bump `x-version` (step 1.3).
 
-3. GitHub Actions takes over:
-   - **Release** checks the tag's version matches the schema's `x-version`,
-     and runs the full check again.
-   - **Deploy docs site** rebuilds the site with the new version added. The
-     model's page shows the latest version, and every older version keeps
-     its own page.
+2. On GitHub, under **Actions**, wait for **Release** and **Deploy docs
+   site** to go green. The model's page on
+   <https://itk-enter.github.io/data-models/> then shows `0.0.2`, and `0.0.1`
+   keeps its own page.
 
-4. Point `enter` at the new version by changing the tag in its
-   `contextUrl`:
+### 3. Use it in `enter`
 
-   ```php
-   contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.2/dataModel.PointOfInterest/context.jsonld',
-   ```
+Change the version in the Source's `contextUrl` from `v0.0.1` to `v0.0.2`:
 
-To check a release, open its raw `context.jsonld` URL; it should load. The
-model's page on <https://itk-enter.github.io/data-models/> should list the
-new version.
+```php
+contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.2/dataModel.PointOfInterest/context.jsonld',
+```
+
+Open that URL in a browser first; if it loads, the release worked.
