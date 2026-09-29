@@ -11,9 +11,13 @@ use ItkEnter\DataModels\Model\DereferencedModel;
  * terms map to smartdatamodels.org. Only top-level property names become
  * terms — deeply nested structural terms (e.g. GeoJSON's `coordinates`)
  * are common vocabulary, not this subject's, and aren't scoped here.
+ * `id` and `type` map to the JSON-LD keywords, as in SDM's and the NGSI-LD
+ * core context, so the context also expands entities correctly on its own.
  */
 final class ContextJsonldGenerator
 {
+    private const KEYWORD_TERMS = ['id' => '@id', 'type' => '@type'];
+
     public function __construct(private readonly Config $config)
     {
     }
@@ -29,9 +33,9 @@ final class ContextJsonldGenerator
             $this->addTerm($terms, $model->folder->name, "{$this->config->namespace}/{$subject}/{$model->folder->name}");
 
             foreach (array_keys($model->properties) as $name) {
-                $iri = $model->isOwnProperty($name)
+                $iri = self::KEYWORD_TERMS[$name] ?? ($model->isOwnProperty($name)
                     ? "{$this->config->namespace}/{$subject}/{$name}"
-                    : "https://smartdatamodels.org/{$name}";
+                    : "https://smartdatamodels.org/{$name}");
                 $this->addTerm($terms, $name, $iri);
             }
         }

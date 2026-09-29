@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$schemaVersion": "0.0.1",
+  "$schemaVersion": "0.0.2",
   "modelTags": "Aarhus Kommune",
   "$id": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/PublicToilet/schema.json",
   "title": "PublicToilet schema",
@@ -294,5 +294,5 @@
   "x-license-url": "https://github.com/itk-enter/data-models/blob/main/dataModel.PointOfInterest/PublicToilet/LICENSE.md",
   "x-model-schema": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/PublicToilet/schema.json",
   "x-model-tags": "Aarhus Kommune",
-  "x-version": "0.0.1"
+  "x-version": "0.0.2"
 }

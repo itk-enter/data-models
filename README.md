@@ -37,7 +37,7 @@ Pin a released model in the `enter` Source by its tagged `context.jsonld`:
 
 ```php
 model: 'PublicToilet',
-contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.1/dataModel.PointOfInterest/context.jsonld',
+contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.2/dataModel.PointOfInterest/context.jsonld',
 ```
 
 The URL contains the version tag, so `enter` keeps using exactly that

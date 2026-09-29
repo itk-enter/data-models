@@ -3,7 +3,7 @@
 
 # PublicToilet
 
-Version: 0.0.1
+Version: 0.0.2
 
 A room or small building containing one or more toilets, and possibly urinals, available for use by the general public or by customers of the hosting premises. Extends https://schema.org/PublicToilet. Boolean properties follow a tri-state convention: omitted means unknown, false means known to be absent.
 
