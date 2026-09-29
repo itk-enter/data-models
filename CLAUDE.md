@@ -1,7 +1,9 @@
 # Conventions for agents
 
 This repo holds `itk-enter`'s own NGSI-LD data models plus the tooling that
-validates and documents them. See `README.md` for an overview.
+validates and documents them. See `README.md` for an overview,
+`docs/data-models.md` for how models are created, changed and released, and
+`docs/project-structure.md` for what each file and `task` command does.
 
 ## Source vs. generated files
 
@@ -16,9 +18,6 @@ Inside each model folder (`<Subject>/<Model>/`):
   editing a source file. YAML, Markdown and SQL generated files carry a
   "generated — do not edit" header; JSON generated files can't hold a
   comment, so this list is the source of truth for those.
-
-The root `README.md`'s model index table is also generated, between the
-`<!-- model-index:start -->` / `<!-- model-index:end -->` markers.
 
 `vendor-assets/` holds pinned third-party files (SDM's common-schema,
 `swagger-ui-dist`), refreshed by `task vendor:update`, not edited by hand.
