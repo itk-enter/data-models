@@ -13,6 +13,7 @@
         "twig/twig": "^3.30"
     },
     "require-dev": {
+        "ergebnis/composer-normalize": "^2.54",
         "friendsofphp/php-cs-fixer": "^3.95.27",
         "phpstan/phpstan": "^2.2.16",
         "phpunit/phpunit": "^13.3.5",
@@ -31,6 +32,9 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        },
         "bump-after-update": true,
         "sort-packages": true
     }
