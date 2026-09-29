@@ -51,15 +51,24 @@ final class ReleaseCommandTest extends TestCase
 
     public function testTagsTheReleaseLocallyWhenTheTreeIsCleanAndValid(): void
     {
+        // Read from the copied schema so the test survives version bumps
+        // of the real model.
+        $schema = json_decode(
+            file_get_contents("{$this->repo}/dataModel.PointOfInterest/PublicToilet/schema.json"),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+        $tag = "PublicToilet/v{$schema['x-version']}";
+
         $tester = $this->runRelease('PublicToilet');
 
         self::assertSame(0, $tester->getStatusCode());
         // The Taskfile's release task greps this exact output for the
         // tag to push — it must be the only thing printed on success.
-        self::assertSame('PublicToilet/v0.0.1', trim($tester->getDisplay()));
+        self::assertSame($tag, trim($tester->getDisplay()));
         self::assertSame(
-            'PublicToilet/v0.0.1',
-            trim((new Process(['git', 'tag', '--list', 'PublicToilet/v0.0.1'], $this->repo))->mustRun()->getOutput()),
+            $tag,
+            trim((new Process(['git', 'tag', '--list', $tag], $this->repo))->mustRun()->getOutput()),
         );
     }
 

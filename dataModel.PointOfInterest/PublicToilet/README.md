@@ -4,13 +4,13 @@
 
 Status: own model
 
-Version: 0.0.1
+Version: 0.0.2
 
 Pin this version in `enter`:
 
 ```php
 model: 'PublicToilet',
-contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.1/dataModel.PointOfInterest/context.jsonld',
+contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.2/dataModel.PointOfInterest/context.jsonld',
 ```
 
 - [Spec](https://itk-enter.github.io/data-models/dataModel.PointOfInterest/PublicToilet/)

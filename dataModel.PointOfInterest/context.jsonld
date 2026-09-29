@@ -30,7 +30,7 @@
         "genderCategory": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/genderCategory",
         "handDrying": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/handDrying",
         "handwashing": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/handwashing",
-        "id": "https://smartdatamodels.org/id",
+        "id": "@id",
         "isAccessibleForFree": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/isAccessibleForFree",
         "keyAccessOutsideOpeningHours": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/keyAccessOutsideOpeningHours",
         "keyRequired": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/keyRequired",
@@ -56,7 +56,7 @@
         "toiletPosition": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/toiletPosition",
         "toiletType": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/toiletType",
         "transferSide": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/transferSide",
-        "type": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/type",
+        "type": "@type",
         "wheelchairAccessible": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/wheelchairAccessible"
     }
 }
