@@ -96,101 +96,33 @@ start from an existing model:
    `task generate -- NewModel`.
 6. Commit the source files and the generated ones, and open a PR.
 
-Once the PR is merged, release it as `0.0.1` by following
-[2. Release it](#2-release-it) below. Until then, the docs site's front
-page lists it as unreleased, with a link to its folder on GitHub.
+To release it, follow steps 4–5 of
+[Changing and releasing a model](#changing-and-releasing-a-model).
+Until then, the docs site's front page lists it as unreleased.
 
 ## Changing and releasing a model
 
-A release is a git tag named `<Model>/v<version>`, e.g.
-`PublicToilet/v0.0.2`. **You never type the tag yourself.** `task release`
-reads the version from `x-version` in the model's `schema.json` and builds
-the tag from it. So the one thing that decides the version is the number
-you write in `schema.json`.
+The release tag (`<Model>/v<version>`) is created by `task release` from
+`x-version` in `schema.json`. You never set the tag yourself.
 
-The example below changes PublicToilet from `0.0.1` to `0.0.2`.
-
-### 1. Make the change
-
-1. Create a branch:
+1. Change the model's source files, usually `schema.json` and
+   `examples/example.json`.
+2. In `schema.json`, set `x-version` and `$schemaVersion` to the new
+   version (they must match).
+3. Run:
 
    ```shell
-   git checkout main
-   git pull
-   git checkout -b publictoilet-0.0.2
+   task validate -- <Model>
+   task generate -- <Model>
    ```
 
-2. Edit `dataModel.PointOfInterest/PublicToilet/schema.json` (and
-   `examples/example.json` if the example should change too).
-
-3. In the same `schema.json`, change **both** version fields to the new
-   version:
-
-   ```json
-   "$schemaVersion": "0.0.2",
-   "x-version": "0.0.2",
-   ```
-
-   Pick the new number like this:
-
-   | Change | Bump | Example |
-   | --- | --- | --- |
-   | Fixes to wording or descriptions | last number | `0.0.1` → `0.0.2` |
-   | New optional properties | middle number | `0.0.2` → `0.1.0` |
-   | Removed, renamed or newly required properties | first number | `0.1.0` → `1.0.0` |
-
-4. Run:
+4. Add the version to `CHANGELOG.md`, then merge the change, generated
+   files included, to `main`.
+5. On an up-to-date `main`, run:
 
    ```shell
-   task validate -- PublicToilet
-   task generate -- PublicToilet
+   task release -- <Model>
    ```
 
-   `validate` must pass. `generate` rewrites the generated files, which
-   you commit along with your change.
-
-5. Add a section for the new version to [`CHANGELOG.md`](../CHANGELOG.md).
-
-6. Commit, push and open a PR:
-
-   ```shell
-   git add -A
-   git commit -m "PublicToilet 0.0.2: <what changed>"
-   git push -u origin publictoilet-0.0.2
-   ```
-
-7. Merge the PR once CI is green. Nothing is released yet: `enter` still
-   uses `0.0.1`.
-
-### 2. Release it
-
-1. Get the merged change and run the release, in your own terminal:
-
-   ```shell
-   git checkout main
-   git pull
-   task release -- PublicToilet
-   ```
-
-   This reads `0.0.2` from `schema.json`, creates the tag
-   `PublicToilet/v0.0.2` and pushes it to GitHub. It stops without
-   tagging if:
-   - you have uncommitted changes: commit or stash them,
-   - the model doesn't validate, or its generated files are out of date:
-     fix it in a new PR,
-   - the tag already exists: you forgot to bump `x-version` (step 1.3).
-
-2. On GitHub, under **Actions**, wait for **Release** and **Deploy docs
-   site** to go green. The model's page on
-   <https://itk-enter.github.io/data-models/> then shows `0.0.2`, and `0.0.1`
-   keeps its own page.
-
-### 3. Use it in `enter`
-
-Change the version in the Source's `contextUrl` from `v0.0.1` to `v0.0.2`:
-
-```php
-contextUrl: 'https://raw.githubusercontent.com/itk-enter/data-models/PublicToilet/v0.0.2/dataModel.PointOfInterest/context.jsonld',
-```
-
-Open that URL in a browser first; if it loads, the release worked.
+6. In `enter`, change the version in the Source's `contextUrl`, e.g.
+   `…/PublicToilet/v0.0.2/dataModel.PointOfInterest/context.jsonld`.
