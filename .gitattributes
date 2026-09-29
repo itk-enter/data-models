@@ -1,0 +1,12 @@
+# Written by `task generate`: collapsed in GitHub diffs and left out of
+# language stats. The hand-written files in a model folder are
+# schema.json, notes.yaml, ADOPTERS.yaml, LICENSE.md and examples/example.json.
+dataModel.*/context.jsonld linguist-generated=true
+dataModel.*/*/README.md linguist-generated=true
+dataModel.*/*/model.yaml linguist-generated=true
+dataModel.*/*/swagger.yaml linguist-generated=true
+dataModel.*/*/schema.sql linguist-generated=true
+dataModel.*/*/doc/spec.md linguist-generated=true
+dataModel.*/*/examples/example-normalized.json linguist-generated=true
+dataModel.*/*/examples/example.jsonld linguist-generated=true
+dataModel.*/*/examples/example-normalized.jsonld linguist-generated=true
