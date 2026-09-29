@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "0.0.1",
+  "modelTags": "Aarhus Kommune",
+  "$id": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/PublicToilet/schema.json",
+  "title": "PublicToilet schema",
+  "description": "A room or small building containing one or more toilets, and possibly urinals, available for use by the general public or by customers of the hosting premises. Extends https://schema.org/PublicToilet. Boolean properties follow a tri-state convention: omitted means unknown, false means known to be absent.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/GSMA-Commons"
+    },
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Location-Commons"
+    },
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Contact-Commons"
+    },
+    {
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "PublicToilet"
+          ],
+          "description": "Property. NGSI Entity type. It has to be PublicToilet"
+        },
+        "toiletType": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Kind of installation. fixed: permanent building or room; automatic: self-cleaning automatic unit (superloo); portable: temporary or movable unit. Enum:'fixed, automatic, portable'. Source: LGA AutomaticPublicConvenience, NPTM FacilityType, OSM portable",
+          "enum": [
+            "fixed",
+            "automatic",
+            "portable"
+          ]
+        },
+        "disposal": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Waste disposal method. Enum:'flush, chemical, pitLatrine, bucket'. Source: OSM toilets:disposal",
+          "enum": [
+            "flush",
+            "chemical",
+            "pitLatrine",
+            "bucket"
+          ]
+        },
+        "genderCategory": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/Text'. User groups the toilets are designated for. Enum:'female, male, unisex, allGender, childrenOnly'. Source: LGA Category, NPTM Male/Female/Unisex/AllGender",
+          "items": {
+            "type": "string",
+            "enum": [
+              "female",
+              "male",
+              "unisex",
+              "allGender",
+              "childrenOnly"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "toiletPosition": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/Text'. Toilet positions available. Enum:'seated, squat, urinal'. Source: OSM toilets:position, LGA Category 'Male urinal'",
+          "items": {
+            "type": "string",
+            "enum": [
+              "seated",
+              "squat",
+              "urinal"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "level": {
+          "type": "number",
+          "description": "Property. Model:'https://schema.org/Number'. Floor level where the toilets are located, 0 being ground level. Source: OSM level"
+        },
+        "accessType": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Who may use the toilets. public: anyone; customers: customers of the hosting premises only; permissive: publicly usable by permission of a private owner, not guaranteed. Enum:'public, customers, permissive'. Source: OSM access, LGA PartOfCommunityScheme",
+          "enum": [
+            "public",
+            "customers",
+            "permissive"
+          ]
+        },
+        "openingHours": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/openingHours'. Opening hours as schema.org/OSM-style strings, e.g. 'Mo-Fr 08:00-20:00'. Source: LGA OpeningHours, NPTM OpeningHours, OSM opening_hours",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "openingHoursSpecification": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/DateTime-Commons/properties/openingHoursSpecification"
+        },
+        "isAccessibleForFree": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/isAccessibleForFree"
+        },
+        "chargeAmount": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Property. Model:'https://schema.org/price'. Charge per use, in chargeCurrency. Source: LGA ChargeAmount, OSM charge"
+        },
+        "chargeCurrency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "Property. Model:'https://schema.org/priceCurrency'. ISO 4217 currency code of chargeAmount. Source: OSM charge"
+        },
+        "paymentMethod": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/Text'. Accepted payment methods. Enum:'coins, cash, card, contactless, mobileApp'. Source: OSM payment:*, NPTM PaymentRequired",
+          "items": {
+            "type": "string",
+            "enum": [
+              "coins",
+              "cash",
+              "card",
+              "contactless",
+              "mobileApp"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "keyRequired": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a key is needed to enter (typically the accessible cubicle). Omitted means unknown; false means known to be absent. Source: LGA RADARKeyNeeded, NPTM KeyRequired"
+        },
+        "keyScheme": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Key scheme used when keyRequired is true. RADAR: UK National Key Scheme; MLAK: Australian Master Locksmiths Access Key; Eurokey: Euroschlüssel (DE/AT/CH and others). Enum:'RADAR, MLAK, Eurokey, other'. Source: LGA RADARKeyNeeded, NPTM MLAK24/ACMLAK",
+          "enum": [
+            "RADAR",
+            "MLAK",
+            "Eurokey",
+            "other"
+          ]
+        },
+        "keyAccessOutsideOpeningHours": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether key holders can enter outside the regular opening hours. Omitted means unknown; false means known to be absent. Source: NPTM MLAKAfterHours, MLAK24"
+        },
+        "staffed": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the toilets have full-time attendant staffing. Omitted means unknown; false means known to be absent. Source: LGA FullTimeStaffing"
+        },
+        "communitySchemeName": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Name of the community toilet scheme the facility belongs to, where a private business makes its toilets available to the public. Source: LGA CommunitySchemeName"
+        },
+        "refOperator": {
+          "description": "Relationship. Reference to the organisation that operates and maintains the toilets. Source: LGA ManagedBy",
+          "anyOf": [
+            {
+              "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+            }
+          ]
+        },
+        "wheelchairAccessible": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Wheelchair accessibility. yes: fully accessible; limited: partially accessible; no: not accessible. Enum:'yes, limited, no'. Source: LGA AccessibleCategory, NPTM Accessible, OSM wheelchair",
+          "enum": [
+            "yes",
+            "limited",
+            "no"
+          ]
+        },
+        "ambulantCubicle": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a cubicle with grab rails for ambulant disabled users is available. Omitted means unknown; false means known to be absent. Source: NPTM Ambulant"
+        },
+        "transferSide": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/Text'. Side(s) from which a wheelchair user can transfer to the toilet in the accessible cubicle. Enum:'left, right'. Source: NPTM LHTransfer, RHTransfer",
+          "items": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "parking": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether parking is available nearby. Omitted means unknown; false means known to be absent. Source: NPTM Parking"
+        },
+        "accessibleParking": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether accessible parking is available nearby. Omitted means unknown; false means known to be absent. Source: NPTM ParkingAccessible"
+        },
+        "accessNote": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Free text on access and accessibility, e.g. steps or where to obtain a key. Source: NPTM AccessNote, LGA Notes"
+        },
+        "changingPlace": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a Changing Places facility (hoist, adult-sized changing bench, space for carers) is available. Omitted means unknown; false means known to be absent. Source: LGA ChangingPlace, NPTM ChangingPlaces"
+        },
+        "adultChange": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether an adult changing facility is available, whether or not it meets the Changing Places standard. Omitted means unknown; false means known to be absent. Source: NPTM AdultChange"
+        },
+        "adultChangeBringOwnSling": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a hoist is available but users must bring their own sling. Omitted means unknown; false means known to be absent. Source: NPTM BYOSling"
+        },
+        "adultChangeShower": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the adult changing facility includes a shower. Omitted means unknown; false means known to be absent. Source: NPTM ACShower"
+        },
+        "babyChange": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether baby changing facilities are available. Omitted means unknown; false means known to be absent. Source: LGA BabyChange, NPTM BabyChange, OSM changing_table"
+        },
+        "babyCareRoom": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a separate baby care room is available. Omitted means unknown; false means known to be absent. Source: NPTM BabyCareRoom"
+        },
+        "familyToilet": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a family toilet is available. Omitted means unknown; false means known to be absent. Source: LGA FamilyToilet"
+        },
+        "handwashing": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a hand washing tap or basin is available. Omitted means unknown; false means known to be absent. Source: OSM toilets:handwashing"
+        },
+        "soap": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether soap is provided. Omitted means unknown; false means known to be absent. Source: OSM (see notes)"
+        },
+        "handDrying": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/Text'. Hand drying means provided. Enum:'electricHandDryer, paperTowel, towel'. Source: OSM toilets:hands_drying",
+          "items": {
+            "type": "string",
+            "enum": [
+              "electricHandDryer",
+              "paperTowel",
+              "towel"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "drinkingWater": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether drinking water is available at the facility. Omitted means unknown; false means known to be absent. Source: NPTM DrinkingWater"
+        },
+        "shower": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a shower is available. Omitted means unknown; false means known to be absent. Source: NPTM Shower"
+        },
+        "menstrualProducts": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether menstrual products are provided. Omitted means unknown; false means known to be absent. Source: OSM toilets:menstrual_products"
+        },
+        "sharpsDisposal": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a sharps disposal bin is available. Omitted means unknown; false means known to be absent. Source: NPTM SharpsDisposal"
+        },
+        "sanitaryDisposal": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether sanitary disposal bins are available. Omitted means unknown; false means known to be absent. Source: NPTM SanitaryDisposal"
+        },
+        "mensPadDisposal": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether incontinence pad disposal is available in men's toilets. Omitted means unknown; false means known to be absent. Source: NPTM MensPadDisposal"
+        },
+        "dumpPoint": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a caravan/motorhome waste dump point is available. Omitted means unknown; false means known to be absent. Source: NPTM DumpPoint"
+        },
+        "dumpPointWashout": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the dump point has a washout facility. Omitted means unknown; false means known to be absent. Source: NPTM DPWashout"
+        }
+      }
+    }
+  ],
+  "required": [
+    "id",
+    "type",
+    "location"
+  ],
+  "x-derived-from": "https://schema.org/PublicToilet",
+  "x-disclaimer": "Redistribution and use in source and binary forms, with or without modification, are permitted  provided that the license conditions are met. Copyright (c) 2026 Aarhus Kommune, contributors to itk-enter/data-models",
+  "x-license-url": "https://github.com/itk-enter/data-models/blob/main/dataModel.PointOfInterest/PublicToilet/LICENSE.md",
+  "x-model-schema": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/PublicToilet/schema.json",
+  "x-model-tags": "Aarhus Kommune",
+  "x-version": "0.0.1"
+}
