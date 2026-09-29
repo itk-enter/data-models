@@ -1,0 +1,235 @@
+{
+    "id": "urn:ngsi-ld:PublicToilet:example-city:PT-0042",
+    "type": "PublicToilet",
+    "name": {
+        "type": "Property",
+        "value": "Castle Park public toilets"
+    },
+    "description": {
+        "type": "Property",
+        "value": "Synthetic example. Standalone public toilet block at the east entrance of the park."
+    },
+    "source": {
+        "type": "Property",
+        "value": "https://example.org/opendata/public-toilets"
+    },
+    "dataProvider": {
+        "type": "Property",
+        "value": "Example City Council"
+    },
+    "location": {
+        "type": "GeoProperty",
+        "value": {
+            "type": "Point",
+            "coordinates": [
+                -2.5879,
+                51.4556
+            ]
+        }
+    },
+    "address": {
+        "type": "Property",
+        "value": {
+            "streetAddress": "Castle Park, Lower Castle Street",
+            "addressLocality": "Example City",
+            "postalCode": "EX1 2AB",
+            "addressCountry": "GB"
+        }
+    },
+    "contactPoint": {
+        "type": "Property",
+        "value": {
+            "contactType": "fault reporting",
+            "email": "toilets@example.org",
+            "telephone": "+44 1234 567890"
+        }
+    },
+    "toiletType": {
+        "type": "Property",
+        "value": "fixed"
+    },
+    "disposal": {
+        "type": "Property",
+        "value": "flush"
+    },
+    "genderCategory": {
+        "type": "Property",
+        "value": [
+            "female",
+            "male"
+        ]
+    },
+    "toiletPosition": {
+        "type": "Property",
+        "value": [
+            "seated",
+            "urinal"
+        ]
+    },
+    "level": {
+        "type": "Property",
+        "value": 0
+    },
+    "accessType": {
+        "type": "Property",
+        "value": "public"
+    },
+    "openingHours": {
+        "type": "Property",
+        "value": [
+            "Mo-Su 07:00-21:00"
+        ]
+    },
+    "openingHoursSpecification": {
+        "type": "Property",
+        "value": [
+            {
+                "dayOfWeek": "Monday",
+                "opens": "07:00:00",
+                "closes": "21:00:00"
+            },
+            {
+                "dayOfWeek": "Tuesday",
+                "opens": "07:00:00",
+                "closes": "21:00:00"
+            },
+            {
+                "dayOfWeek": "Wednesday",
+                "opens": "07:00:00",
+                "closes": "21:00:00"
+            },
+            {
+                "dayOfWeek": "Thursday",
+                "opens": "07:00:00",
+                "closes": "21:00:00"
+            },
+            {
+                "dayOfWeek": "Friday",
+                "opens": "07:00:00",
+                "closes": "21:00:00"
+            },
+            {
+                "dayOfWeek": "Saturday",
+                "opens": "07:00:00",
+                "closes": "21:00:00"
+            },
+            {
+                "dayOfWeek": "Sunday",
+                "opens": "07:00:00",
+                "closes": "21:00:00"
+            }
+        ]
+    },
+    "isAccessibleForFree": {
+        "type": "Property",
+        "value": false
+    },
+    "chargeAmount": {
+        "type": "Property",
+        "value": 0.5
+    },
+    "chargeCurrency": {
+        "type": "Property",
+        "value": "GBP"
+    },
+    "paymentMethod": {
+        "type": "Property",
+        "value": [
+            "coins",
+            "contactless"
+        ]
+    },
+    "keyRequired": {
+        "type": "Property",
+        "value": true
+    },
+    "keyScheme": {
+        "type": "Property",
+        "value": "RADAR"
+    },
+    "keyAccessOutsideOpeningHours": {
+        "type": "Property",
+        "value": false
+    },
+    "staffed": {
+        "type": "Property",
+        "value": false
+    },
+    "refOperator": {
+        "type": "Relationship",
+        "object": "urn:ngsi-ld:Organization:example-city-council"
+    },
+    "wheelchairAccessible": {
+        "type": "Property",
+        "value": "yes"
+    },
+    "ambulantCubicle": {
+        "type": "Property",
+        "value": true
+    },
+    "transferSide": {
+        "type": "Property",
+        "value": [
+            "left"
+        ]
+    },
+    "parking": {
+        "type": "Property",
+        "value": false
+    },
+    "accessNote": {
+        "type": "Property",
+        "value": "Accessible cubicle uses a RADAR key; keys are sold at the park café."
+    },
+    "changingPlace": {
+        "type": "Property",
+        "value": false
+    },
+    "adultChange": {
+        "type": "Property",
+        "value": false
+    },
+    "babyChange": {
+        "type": "Property",
+        "value": true
+    },
+    "familyToilet": {
+        "type": "Property",
+        "value": false
+    },
+    "handwashing": {
+        "type": "Property",
+        "value": true
+    },
+    "soap": {
+        "type": "Property",
+        "value": true
+    },
+    "handDrying": {
+        "type": "Property",
+        "value": [
+            "electricHandDryer"
+        ]
+    },
+    "drinkingWater": {
+        "type": "Property",
+        "value": true
+    },
+    "shower": {
+        "type": "Property",
+        "value": false
+    },
+    "menstrualProducts": {
+        "type": "Property",
+        "value": false
+    },
+    "sharpsDisposal": {
+        "type": "Property",
+        "value": true
+    },
+    "sanitaryDisposal": {
+        "type": "Property",
+        "value": true
+    },
+    "@context": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/context.jsonld"
+}
