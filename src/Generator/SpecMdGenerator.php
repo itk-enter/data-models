@@ -7,7 +7,7 @@ use ItkEnter\DataModels\Model\DescriptionParser;
 use Twig\Environment;
 
 /**
- * Generates doc/spec.md (phase 4, point 6): a header, description and
+ * Generates doc/spec.md: a header, description and
  * version, a property list, the required properties, then notes.yaml.
  *
  * The property/required lists are pre-rendered here, not looped over in

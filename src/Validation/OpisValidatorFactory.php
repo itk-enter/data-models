@@ -11,7 +11,7 @@ use Opis\JsonSchema\Validator;
 /**
  * Builds an opis/json-schema Validator whose resolver maps SDM's
  * common-schema URI to the pinned local copy in vendor-assets/, so
- * validation is offline and reproducible (phase 3, check 2).
+ * validation is offline and reproducible.
  */
 final class OpisValidatorFactory
 {

@@ -1,8 +1,7 @@
 # Conventions for agents
 
 This repo holds `itk-enter`'s own NGSI-LD data models plus the tooling that
-validates and documents them. Read `data-models-PLAN.md` first — it has the
-full plan, its phases, and the decisions (`D1`-`D10`) behind this layout.
+validates and documents them. See `README.md` for an overview.
 
 ## Source vs. generated files
 
@@ -31,8 +30,8 @@ The root `README.md`'s model index table is also generated, between the
 - Everything generated is deterministic (sorted keys, stable ordering) so a
   second `task generate` run changes nothing.
 - The IRI namespace, base URLs and vendor pins live in one place,
-  `config.yaml` (decision D2) — don't hardcode `itk-enter.github.io` or
+  `config.yaml` — don't hardcode `itk-enter.github.io` or
   `raw.githubusercontent.com` URLs elsewhere.
 - A model can live here indefinitely, submitted to SDM or not. Submitting a
-  model later is a separate, manual step (see "Later: submitting a model to
-  SDM" in the plan) — no command in this repo does it.
+  model later is a separate, manual step (see "Submitting a model to SDM" in
+  `README.md`) — no command in this repo does it.

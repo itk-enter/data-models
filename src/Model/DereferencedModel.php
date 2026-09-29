@@ -5,7 +5,7 @@ namespace ItkEnter\DataModels\Model;
 /**
  * A model's schema, fully dereferenced: SDM's model.yaml shape, plus which
  * of its top-level properties came from a common-schema `$ref` rather than
- * this model's own extension (context.jsonld, phase 4 point 3, needs that
+ * this model's own extension (context.jsonld needs that
  * distinction to pick the right IRI namespace).
  */
 final class DereferencedModel

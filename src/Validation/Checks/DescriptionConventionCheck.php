@@ -9,8 +9,8 @@ use ItkEnter\DataModels\Validation\Check;
 use ItkEnter\DataModels\Validation\ValidationError;
 
 /**
- * Check 4: each top-level property's description follows the SDM
- * convention the generators (phase 4) rely on.
+ * Each top-level property's description follows the SDM
+ * convention the generators rely on.
  */
 final class DescriptionConventionCheck implements Check
 {

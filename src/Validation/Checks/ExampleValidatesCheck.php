@@ -11,7 +11,7 @@ use Opis\JsonSchema\Errors\ErrorFormatter;
 use Opis\JsonSchema\Exceptions\SchemaException;
 
 /**
- * Check 3: examples/example.json validates against schema.json.
+ * examples/example.json validates against schema.json.
  */
 final class ExampleValidatesCheck implements Check
 {

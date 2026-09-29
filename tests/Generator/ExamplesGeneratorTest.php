@@ -9,9 +9,8 @@ use ItkEnter\DataModels\Model\ModelLoader;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Phase 4, point 1's required test: the generated example-normalized.json
- * equals the hand-written fixture phase 2 kept in tests/fixtures/ for this
- * comparison.
+ * The generated example-normalized.json equals the hand-written fixture
+ * kept in tests/fixtures/ for this comparison.
  */
 final class ExamplesGeneratorTest extends TestCase
 {

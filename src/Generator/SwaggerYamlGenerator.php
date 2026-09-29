@@ -5,10 +5,10 @@ namespace ItkEnter\DataModels\Generator;
 use ItkEnter\DataModels\Model\DereferencedModel;
 
 /**
- * Generates swagger.yaml (phase 4, point 4): OpenAPI 3.0.0 in SDM's shape,
+ * Generates swagger.yaml: OpenAPI 3.0.0 in SDM's shape,
  * but `$ref`ing model.yaml and the examples by relative path — not SDM's
  * absolute URLs — so the same file works at every versioned docs-site
- * path (D9: no `servers`, "Try it out" is off).
+ * path (no `servers`, "Try it out" is off).
  */
 final class SwaggerYamlGenerator
 {

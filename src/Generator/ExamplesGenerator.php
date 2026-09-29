@@ -6,8 +6,8 @@ use ItkEnter\DataModels\Config;
 use ItkEnter\DataModels\Model\DereferencedModel;
 
 /**
- * Generates the three files derived from examples/example.json (phase 4,
- * point 1): example-normalized.json (NGSI v2), example.jsonld (NGSI-LD
+ * Generates the three files derived from examples/example.json:
+ * example-normalized.json (NGSI v2), example.jsonld (NGSI-LD
  * key-values) and example-normalized.jsonld (NGSI-LD normalized).
  */
 final class ExamplesGenerator

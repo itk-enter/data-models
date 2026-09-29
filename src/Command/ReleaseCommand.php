@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
- * Phase 5, point 2: reads the version from the schema, checks the tree is
+ * Reads the version from the schema, checks the tree is
  * clean and generated files are current, then creates `<Model>/v<version>`
  * — locally only. This normally runs inside the phpfpm container (via
  * `task release`), which has no access to the host's git credentials, so

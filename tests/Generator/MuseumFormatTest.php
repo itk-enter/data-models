@@ -13,11 +13,10 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Format test (phase 4): our model.yaml and swagger.yaml, run against a
+ * Format test: our model.yaml and swagger.yaml, run against a
  * vendored published SDM model (Museum), match SDM's own output
  * structurally — same keys and property set, same x-ngsi types — not
- * byte for byte. SDM's own generator has its own quirks (data-models-PLAN.md's
- * Findings: e.g. Museum's own `id` is typed `x-ngsi.type: Property`, not
+ * byte for byte. SDM's own generator has its own quirks (e.g. Museum's own `id` is typed `x-ngsi.type: Property`, not
  * `Relationship`, despite common-schema's EntityIdentifierType description
  * saying "Relationship."); this test follows our own, more literal
  * reading of the description convention rather than replicating that.

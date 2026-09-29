@@ -8,7 +8,7 @@ use ItkEnter\DataModels\Validation\Check;
 use ItkEnter\DataModels\Validation\ValidationError;
 
 /**
- * Check 5: $schemaVersion equals x-version, and is a semver string (D6).
+ * $schemaVersion equals x-version, and is a semver string.
  */
 final class VersionConsistencyCheck implements Check
 {

@@ -6,7 +6,7 @@ use ItkEnter\DataModels\Config;
 use ItkEnter\DataModels\Model\ModelFinder;
 
 /**
- * The build checks phase 6 requires task site:build to fail on: every
+ * The checks task site:build fails on: every
  * `$id` in a latest schema maps to a built file, every own-namespace IRI
  * in every context has a page, and every relative `$ref` in every built
  * swagger.yaml resolves. Runs against build/site/, after `mkdocs build`.

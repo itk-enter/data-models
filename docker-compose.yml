@@ -11,7 +11,7 @@ services:
         volumes:
             - .:/app
 
-    # Docs site (phase 6): renders the Markdown tree the PHP tool writes to
+    # Docs site: renders the Markdown tree the PHP tool writes to
     # build/docs/ into build/site/.
     mkdocs:
         image: squidfunk/mkdocs-material:9.7.7

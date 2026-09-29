@@ -6,7 +6,7 @@ namespace ItkEnter\DataModels\Model;
  * Parses a top-level property's description against the SDM convention:
  * "<Property|Relationship|GeoProperty>. [Model:'…'. ]free text[ Enum:'…'.]
  * [ Units:'…'.]". Each structured marker is optional except the leading
- * NGSI type; the generators (phase 4) rely on this being followed, so it's
+ * NGSI type; the generators rely on this being followed, so it's
  * checked here rather than assumed.
  *
  * SDM's model.yaml strips only the leading "<NgsiType>. " token before

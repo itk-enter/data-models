@@ -7,9 +7,6 @@ otherwise generate on acceptance (`model.yaml`, `swagger.yaml`, `schema.sql`,
 `doc/spec.md`, examples in every format, the subject `context.jsonld`), plus
 a documentation site on GitHub Pages.
 
-See [`data-models-PLAN.md`](data-models-PLAN.md) for the full plan, its
-phases and the decisions behind it.
-
 Two public faces, from one repo:
 
 | Who | Where | What |
@@ -55,12 +52,24 @@ task release -- <Model>        # tag a release, e.g. `task release -- PublicToil
 task vendor:update             # refresh vendor-assets/ at the pinned versions
 ```
 
-`bin/datamodels` is the console entry point. Commands land one plan phase at
-a time, and each phase adds the PHP dependencies and dev tooling (PHPUnit,
-PHPStan, PHP CS Fixer, …) it actually needs, once there's real code under
-`src/` for them to check. `model:new` is the one command still to land.
+`bin/datamodels` is the console entry point. `model:new` has a Taskfile
+entry but isn't implemented yet.
 
 CI (`.github/workflows/ci.yml`) runs `code-analysis`, `test`, `check` and
 `site:build` on every PR and push to `main`. `release.yml` re-checks a
 `<Model>/v<version>` tag against the schema's own version. `pages.yml`
 deploys the docs site to GitHub Pages on push to `main` and on release tags.
+
+## Submitting a model to SDM
+
+A model can live here indefinitely. When one is ready for the Smart Data
+Models program:
+
+1. Copy its source files (`schema.json`, `notes.yaml`, `ADOPTERS.yaml`,
+   `examples/example.json`) into a fork of `smart-data-models/incubated`
+   and open a PR. Generated files and `context.jsonld` stay out of the PR,
+   since SDM generates its own.
+2. Before submitting, decide whether to switch the model's terms to the SDM
+   namespace (`namespace` in `config.yaml`). Switching changes the expanded
+   IRIs of those attributes for data already published, so plan a
+   re-import in `enter`.
