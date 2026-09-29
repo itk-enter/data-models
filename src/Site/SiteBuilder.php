@@ -290,7 +290,8 @@ final class SiteBuilder
                 'name' => $folder->name,
                 'version' => end($entry['versions']),
                 'status' => (string) ($notes['status'] ?? 'own model'),
-                'links' => "[Spec]({$folder->name}/)",
+                // A .md target (not a bare directory) so mkdocs --strict validates it.
+                'links' => "[Spec]({$folder->subject}/{$folder->name}/index.md)",
             ];
         }
 
