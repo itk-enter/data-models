@@ -1,0 +1,37 @@
+{
+    "id": "urn:ngsi-ld:Bench:osm:node:888668859",
+    "type": "Bench",
+    "description": "Synthetic example, based on an OpenStreetMap bench in Aarhus. Wooden bench without a backrest at the edge of Vestereng.",
+    "source": "https://www.openstreetmap.org/node/888668859",
+    "dataProvider": "OpenStreetMap contributors",
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            10.1837388,
+            56.1841591
+        ]
+    },
+    "address": {
+        "addressLocality": "Aarhus",
+        "addressCountry": "DK"
+    },
+    "contactPoint": {
+        "contactType": "fault reporting",
+        "url": "https://example.org/report-a-fault"
+    },
+    "backrest": false,
+    "armrest": false,
+    "seats": 2,
+    "material": "wood",
+    "color": "brown",
+    "direction": 187,
+    "twoSided": false,
+    "lyingDown": false,
+    "covered": false,
+    "lit": false,
+    "wasteBasket": true,
+    "inscription": "Vestereng er skøn, hold den ren og grøn",
+    "memorial": false,
+    "checkDate": "2026-05-14",
+    "@context": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/context.jsonld"
+}
