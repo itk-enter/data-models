@@ -1,0 +1,96 @@
+{
+    "id": "urn:ngsi-ld:Bench:osm:node:888668859",
+    "type": "Bench",
+    "description": {
+        "type": "Text",
+        "value": "Synthetic example, based on an OpenStreetMap bench in Aarhus. Wooden bench without a backrest at the edge of Vestereng."
+    },
+    "source": {
+        "type": "Text",
+        "value": "https://www.openstreetmap.org/node/888668859"
+    },
+    "dataProvider": {
+        "type": "Text",
+        "value": "OpenStreetMap contributors"
+    },
+    "location": {
+        "type": "geo:json",
+        "value": {
+            "type": "Point",
+            "coordinates": [
+                10.1837388,
+                56.1841591
+            ]
+        }
+    },
+    "address": {
+        "type": "StructuredValue",
+        "value": {
+            "addressLocality": "Aarhus",
+            "addressCountry": "DK"
+        }
+    },
+    "contactPoint": {
+        "type": "StructuredValue",
+        "value": {
+            "contactType": "fault reporting",
+            "url": "https://example.org/report-a-fault"
+        }
+    },
+    "backrest": {
+        "type": "Boolean",
+        "value": false
+    },
+    "armrest": {
+        "type": "Boolean",
+        "value": false
+    },
+    "seats": {
+        "type": "Number",
+        "value": 2
+    },
+    "material": {
+        "type": "Text",
+        "value": "wood"
+    },
+    "color": {
+        "type": "Text",
+        "value": "brown"
+    },
+    "direction": {
+        "type": "Number",
+        "value": 187
+    },
+    "twoSided": {
+        "type": "Boolean",
+        "value": false
+    },
+    "lyingDown": {
+        "type": "Boolean",
+        "value": false
+    },
+    "covered": {
+        "type": "Boolean",
+        "value": false
+    },
+    "lit": {
+        "type": "Boolean",
+        "value": false
+    },
+    "wasteBasket": {
+        "type": "Boolean",
+        "value": true
+    },
+    "inscription": {
+        "type": "Text",
+        "value": "Vestereng er skøn, hold den ren og grøn"
+    },
+    "memorial": {
+        "type": "Boolean",
+        "value": false
+    },
+    "checkDate": {
+        "type": "Text",
+        "value": "2026-05-14"
+    }
+}

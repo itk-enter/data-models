@@ -7,6 +7,10 @@ Models are released independently, each tagged `<Model>/v<version>`.
 
 ## [Unreleased]
 
+- Added `dataModel.PointOfInterest/Bench` (0.0.1, not yet released): a
+  public bench, extending SDM's PointOfInterest with attributes from
+  OpenStreetMap `amenity=bench` tagging.
+
 - Removed the original implementation plan now that the repo is in use; its
   remaining guidance lives in `README.md`.
 

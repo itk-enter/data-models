@@ -1,0 +1,12 @@
+description: >-
+    This is a compilation list of the current adopters of the data model
+    Bench of the Subject dataModel.PointOfInterest. All fields except
+    adopter and organization are non mandatory.
+currentAdopters:
+    - adopter: Aarhus Kommune
+      description: Bench locations published via the enter open data project.
+      mail:
+      organization: Aarhus Kommune
+      project: itk-enter/enter
+      comments:
+      startDate: 2026

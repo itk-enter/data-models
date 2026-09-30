@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "0.0.1",
+  "modelTags": "Aarhus Kommune",
+  "$id": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/Bench/schema.json",
+  "title": "Bench schema",
+  "description": "A long seat for several people, typically outdoors in a park, square, street or along a path, available for use by the general public. Extends the Smart Data Models PointOfInterest. Boolean properties follow a tri-state convention: omitted means unknown, false means known to be absent.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/GSMA-Commons"
+    },
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Location-Commons"
+    },
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Contact-Commons"
+    },
+    {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/PhysicalObject-Commons"
+    },
+    {
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Bench"
+          ],
+          "description": "Property. NGSI Entity type. It has to be Bench"
+        },
+        "backrest": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the bench has a backrest. Omitted means unknown; false means known to be absent. Source: OSM backrest"
+        },
+        "armrest": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the bench has armrests, at the ends or between seats. Omitted means unknown; false means known to be absent. Source: OSM armrest"
+        },
+        "seats": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Property. Model:'https://schema.org/Integer'. Number of people who can sit on the bench at the same time. Source: OSM seats"
+        },
+        "seatsSeparated": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the seats are separated from each other, e.g. by armrests or dividers, so the bench can't be lain on. Omitted means unknown; false means known to be absent. Source: OSM seats:separated"
+        },
+        "material": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Main material of the seat. Enum:'wood, metal, steel, concrete, stone, granite, plastic'. Source: OSM material",
+          "enum": [
+            "wood",
+            "metal",
+            "steel",
+            "concrete",
+            "stone",
+            "granite",
+            "plastic"
+          ]
+        },
+        "direction": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 360,
+          "description": "Property. Model:'https://schema.org/Number'. Direction a seated person faces, in degrees clockwise from north. For a two-sided bench, either side. Units:'degrees'. Source: OSM direction"
+        },
+        "twoSided": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether people can sit on both sides of the bench. Omitted means unknown; false means known to be absent. Source: OSM two_sided"
+        },
+        "lyingDown": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the bench is suitable for lying down on. Omitted means unknown; false means known to be absent. Source: OSM lying_down"
+        },
+        "hostileArchitecture": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/Text'. Design features that discourage lying or lingering on the bench. Enum:'slanted, separatedSeats, spikes, other'. Source: OSM hostile_architecture",
+          "items": {
+            "type": "string",
+            "enum": [
+              "slanted",
+              "separatedSeats",
+              "spikes",
+              "other"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "covered": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the bench is under a roof or shelter. Omitted means unknown; false means known to be absent. Source: OSM covered"
+        },
+        "lit": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the bench is lit at night. Omitted means unknown; false means known to be absent. Source: OSM lit"
+        },
+        "wasteBasket": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether a waste basket is attached to or right next to the bench. Omitted means unknown; false means known to be absent. Source: OSM bin"
+        },
+        "inscription": {
+          "type": "string",
+          "description": "Property. Model:'https://schema.org/Text'. Text engraved on or attached to the bench, such as a memorial plaque. Source: OSM inscription"
+        },
+        "memorial": {
+          "type": "boolean",
+          "description": "Property. Model:'https://schema.org/Boolean'. Whether the bench is a memorial bench, dedicated to a person or event. Omitted means unknown; false means known to be absent. Source: OSM memorial=bench"
+        },
+        "level": {
+          "type": "number",
+          "description": "Property. Model:'https://schema.org/Number'. Floor level where the bench is located, 0 being ground level. Only relevant indoors or in multi-level structures. Source: OSM level"
+        },
+        "checkDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Property. Model:'https://schema.org/Date'. Date the bench was last verified to exist and match its description on the ground. Source: OSM check_date, survey:date"
+        }
+      }
+    }
+  ],
+  "required": [
+    "id",
+    "type",
+    "location"
+  ],
+  "x-derived-from": "https://smart-data-models.github.io/dataModel.PointOfInterest/PointOfInterest/schema.json",
+  "x-disclaimer": "Redistribution and use in source and binary forms, with or without modification, are permitted  provided that the license conditions are met. Copyright (c) 2026 Aarhus Kommune, contributors to itk-enter/data-models",
+  "x-license-url": "https://github.com/itk-enter/data-models/blob/main/dataModel.PointOfInterest/Bench/LICENSE.md",
+  "x-model-schema": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/Bench/schema.json",
+  "x-model-tags": "Aarhus Kommune",
+  "x-version": "0.0.1"
+}
