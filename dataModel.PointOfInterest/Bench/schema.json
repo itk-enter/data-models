@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$schemaVersion": "0.0.1",
+  "$schemaVersion": "0.0.2",
   "modelTags": "Aarhus Kommune",
   "$id": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/Bench/schema.json",
   "title": "Bench schema",
-  "description": "A long seat for several people, typically outdoors in a park, square, street or along a path, available for use by the general public. Extends the Smart Data Models PointOfInterest. Boolean properties follow a tri-state convention: omitted means unknown, false means known to be absent.",
+  "description": "A long seat for several people, or a picnic table with benches, typically outdoors in a park, square, street or along a path, available for use by the general public. The category tells which of the two it is. Extends the Smart Data Models PointOfInterest. Boolean properties follow a tri-state convention: omitted means unknown, false means known to be absent.",
   "type": "object",
   "allOf": [
     {
@@ -27,6 +27,19 @@
             "Bench"
           ],
           "description": "Property. NGSI Entity type. It has to be Bench"
+        },
+        "category": {
+          "type": "array",
+          "description": "Property. Model:'https://schema.org/Text'. Kind of seat, a bench or a picnic table with benches. Enum:'bench, picnicTable'. Source: OSM amenity=bench (bench), leisure=picnic_table (picnicTable)",
+          "items": {
+            "type": "string",
+            "enum": [
+              "bench",
+              "picnicTable"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
         },
         "backrest": {
           "type": "boolean",
@@ -129,5 +142,5 @@
   "x-license-url": "https://github.com/itk-enter/data-models/blob/main/dataModel.PointOfInterest/Bench/LICENSE.md",
   "x-model-schema": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/Bench/schema.json",
   "x-model-tags": "Aarhus Kommune",
-  "x-version": "0.0.1"
+  "x-version": "0.0.2"
 }
