@@ -3,8 +3,8 @@
 openapi: 3.0.0
 info:
   title: Bench
-  description: 'A long seat for several people, typically outdoors in a park, square, street or along a path, available for use by the general public. Extends the Smart Data Models PointOfInterest. Boolean properties follow a tri-state convention: omitted means unknown, false means known to be absent.'
-  version: 0.0.1
+  description: 'A long seat for several people, or a picnic table with benches, typically outdoors in a park, square, street or along a path, available for use by the general public. The category tells which of the two it is. Extends the Smart Data Models PointOfInterest. Boolean properties follow a tri-state convention: omitted means unknown, false means known to be absent.'
+  version: 0.0.2
 paths:
   /ngsi-ld/v1/entities:
     get:
