@@ -17,6 +17,7 @@
         "babyCareRoom": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/babyCareRoom",
         "babyChange": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/babyChange",
         "backrest": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/backrest",
+        "category": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/category",
         "changingPlace": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/changingPlace",
         "chargeAmount": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/chargeAmount",
         "chargeCurrency": "https://itk-enter.github.io/data-models/dataModel.PointOfInterest/chargeCurrency",

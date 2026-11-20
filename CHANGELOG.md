@@ -7,6 +7,10 @@ Models are released independently, each tagged `<Model>/v<version>`.
 
 ## [Unreleased]
 
+- Added `category` to `dataModel.PointOfInterest/Bench` (0.0.2, not yet
+  released): `bench` or `picnicTable`, so that a picnic table with benches
+  can be published as a Bench and still be told apart.
+
 - Added `dataModel.PointOfInterest/Bench` (0.0.1, not yet released): a
   public bench, extending SDM's PointOfInterest with attributes from
   OpenStreetMap `amenity=bench` tagging.
